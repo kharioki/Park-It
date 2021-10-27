@@ -88,9 +88,9 @@ const styles = StyleSheet.create({
     letterSpacing: 1,
   },
   dots: {
-    width: 8,
-    height: 8,
-    borderRadius: 3,
+    width: 10,
+    height: 10,
+    borderRadius: 5,
     marginHorizontal: 3,
   },
   title: {

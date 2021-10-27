@@ -1,8 +1,10 @@
 import React from 'react'
-import { View, Text, StyleSheet, Image, TouchableOpacity } from 'react-native'
+import { View, Text, StyleSheet, Image, TouchableOpacity, Dimensions } from 'react-native'
 import Onboarding from 'react-native-onboarding-swiper'
 
-const OnboardingScreen = () => {
+const { width } = Dimensions.get('window')
+
+const OnboardingScreen = ({ navigation }) => {
 
   const Skip = ({ ...props }) => (
     <TouchableOpacity {...props} style={{ marginHorizontal: 8 }}>
@@ -37,8 +39,8 @@ const OnboardingScreen = () => {
         NextButtonComponent={Next}
         DoneButtonComponent={Done}
         DotComponent={Dots}
-        onSkip={() => console.log('onSkip')}
-        onDone={() => console.log('onDone')}
+        onSkip={() => navigation.replace('SignIn')}
+        onDone={() => navigation.navigate('SignIn')}
         titleStyles={styles.title}
         subTitleStyles={styles.subTitle}
         pages={[
@@ -75,8 +77,9 @@ const OnboardingScreen = () => {
 const styles = StyleSheet.create({
   image: {
     height: 300,
-    width: '100%',
+    width: width - 40,
     marginHorizontal: 20,
+    resizeMode: 'contain',
   },
   controls: {
     fontSize: 18,

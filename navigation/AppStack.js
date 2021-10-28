@@ -9,6 +9,7 @@ import DrawerContent from '../screens/DrawerContent';
 import ActiveSessions from '../screens/ActiveSessions';
 
 const HomeStack = createStackNavigator();
+const SessionsStack = createStackNavigator();
 
 const Drawer = createDrawerNavigator();
 
@@ -31,7 +32,31 @@ export const HomeStackScreen = ({ navigation }) => {
   )
 };
 
-const AppStack = () => {
+export const SessionsStackScreen = ({ navigation }) => {
+  return (
+    <SessionsStack.Navigator>
+      <SessionsStack.Screen
+        name="ActiveSessions"
+        component={ActiveSessions}
+        options={{
+          title: 'Active Sessions',
+          headerLeft: () => (
+            <Ionicons.Button
+              name="ios-menu"
+              color="#222"
+              size={30}
+              backgroundColor="transparent"
+              style={{ marginLeft: 10 }}
+              onPress={() => navigation.openDrawer()}
+            />
+          ),
+        }}
+      />
+    </SessionsStack.Navigator>
+  )
+};
+
+const AppStack = ({ navigation }) => {
   return (
     <Drawer.Navigator drawerContent={(props) => <DrawerContent {...props} />}>
       <Drawer.Screen
@@ -42,20 +67,10 @@ const AppStack = () => {
         }}
       />
       <Drawer.Screen
-        name="ActiveSessions"
-        component={ActiveSessions}
+        name="SessionsStack"
+        component={SessionsStackScreen}
         options={{
-          title: 'Active Sessions',
-          headerLeft: ({ navigation }) => (
-            <Ionicons.Button
-              name="ios-menu"
-              color="#222"
-              size={30}
-              backgroundColor="transparent"
-              style={{ marginLeft: 10 }}
-              onPress={() => navigation.openDrawer()}
-            />
-          ),
+          headerShown: false,
         }}
       />
     </Drawer.Navigator>

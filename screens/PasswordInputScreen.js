@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from 'react'
+import React, { useState, useRef, useEffect, useContext } from 'react'
 import {
   View,
   Text,
@@ -9,11 +9,13 @@ import {
   StyleSheet,
   Dimensions,
 } from 'react-native'
+import { AuthContext } from '../navigation/AuthProvider'
 
 const { width } = Dimensions.get('window')
 
 const PasswordInputScreen = ({ navigation }) => {
   let textInput = useRef(null);
+  const { signUp } = useContext(AuthContext)
 
   const [password, setPassword] = useState('')
   const [confirmPassword, setConfirmPassword] = useState('')
@@ -27,8 +29,9 @@ const PasswordInputScreen = ({ navigation }) => {
     setConfirmPassword(text)
   }
 
-  const onPressContinue = () => {
-    navigation.navigate('OTPInput')
+  const onPressFinishSignup = () => {
+    signUp('+254729918514')
+    // navigation.navigate('OTPInput')
   };
 
   const onChangeFocus = () => {
@@ -77,7 +80,7 @@ const PasswordInputScreen = ({ navigation }) => {
         </View>
 
         <View style={styles.viewBottom}>
-          <TouchableOpacity style={styles.button} onPress={onPressContinue} disabled={password !== confirmPassword}>
+          <TouchableOpacity style={styles.button} onPress={onPressFinishSignup} disabled={password !== confirmPassword}>
             <Text style={styles.buttonText}>Finish</Text>
           </TouchableOpacity>
         </View>

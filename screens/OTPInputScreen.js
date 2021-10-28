@@ -5,6 +5,7 @@ import {
 import {
   CodeField, Cursor, useBlurOnFulfill, useClearByFocusCell
 } from 'react-native-confirmation-code-field'
+import Button from '../components/Button';
 
 const { Value, Text: AnimatedText } = Animated;
 
@@ -99,9 +100,7 @@ const OTPInputScreen = ({ navigation }) => {
         />
       </View>
       <View style={styles.viewBottom}>
-        <TouchableOpacity style={styles.button} onPress={onPressContinue}>
-          <Text style={styles.buttonText}>Continue</Text>
-        </TouchableOpacity>
+        <Button text="Continue" onPress={onPressContinue} isDisabled={value.length !== 4} />
       </View>
     </SafeAreaView>
   )
@@ -170,19 +169,6 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-end',
     alignItems: 'center',
     marginBottom: 40,
-  },
-  button: {
-    width: width - 40,
-    height: 50,
-    borderRadius: 15,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#0db665',
-  },
-  buttonText: {
-    fontSize: 16,
-    color: '#fff',
-    alignItems: 'center',
   },
 })
 

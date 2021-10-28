@@ -12,6 +12,7 @@ import {
   StyleSheet,
   Dimensions,
 } from 'react-native'
+import Button from '../components/Button';
 import { Countries } from '../utils/countries';
 
 const { width } = Dimensions.get('window')
@@ -146,11 +147,7 @@ const PhoneInputScreen = ({ navigation }) => {
         </View>
 
         <View style={styles.viewBottom}>
-          <TouchableOpacity onPress={onPressContinue} disabled={phoneNumber === ''}>
-            <View style={[styles.button, { backgroundColor: phoneNumber ? '#0db665' : 'gray' }]}>
-              <Text style={styles.buttonText}>Continue</Text>
-            </View>
-          </TouchableOpacity>
+          <Button text="Continue" onPress={onPressContinue} isDisabled={phoneNumber === ''} />
         </View>
 
       </KeyboardAvoidingView>
@@ -265,18 +262,6 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-end',
     alignItems: 'center',
     marginBottom: 40,
-  },
-  button: {
-    width: width - 40,
-    height: 50,
-    borderRadius: 15,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  buttonText: {
-    fontSize: 16,
-    color: '#fff',
-    alignItems: 'center',
   },
 })
 

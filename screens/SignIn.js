@@ -13,6 +13,8 @@ import {
   Dimensions,
 } from 'react-native'
 import { Countries } from '../utils/countries';
+import Button from '../components/Button';
+import PasswordInput from '../components/PasswordInput';
 
 const { width } = Dimensions.get('window')
 
@@ -152,26 +154,14 @@ const SignIn = ({ navigation }) => {
             />
           </View>
 
-          <View style={styles.passwordInput}>
-            <TextInput
-              style={styles.password}
-              placeholder="Password"
-              secureTextEntry={true}
-              value={password}
-              onChangeText={onChangePassword}
-            />
-          </View>
+          <PasswordInput val={password} placeholder="Password" onChangePassword={onChangePassword} />
+
         </View>
 
         <View style={styles.viewBottom}>
-          <TouchableOpacity style={[styles.button, { backgroundColor: '#0db665' }]} onPress={onPressSignin}>
-            <Text style={[styles.buttonText, { color: '#fff' }]}>Login</Text>
-          </TouchableOpacity>
+          <Button text="Sign In" onPress={onPressSignin} />
           <Text style={{ marginTop: 10, fontSize: 16, fontWeight: 'bold' }}>Or</Text>
-          <TouchableOpacity style={[styles.button, { backgroundColor: '#fff' }]} onPress={onPressSignup} >
-            <Text style={[styles.buttonText, { color: '#0db665' }]}>Sign Up</Text>
-          </TouchableOpacity>
-
+          <Button text="Sign Up" onPress={onPressSignin} isClear={true} />
         </View>
 
       </KeyboardAvoidingView>
@@ -219,19 +209,6 @@ const styles = StyleSheet.create({
     marginLeft: 5,
     fontSize: 16,
     letterSpacing: 1,
-    color: '#222',
-  },
-  passwordInput: {
-    marginTop: 10,
-    paddingVertical: 10,
-    paddingHorizontal: 12,
-    borderBottomWidth: 0.5,
-    borderBottomColor: '#d6d7da',
-    width: width - 40,
-  },
-  password: {
-    marginLeft: 5,
-    fontSize: 15,
     color: '#222',
   },
   modalContainer: {
@@ -294,20 +271,6 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-end',
     alignItems: 'center',
     marginBottom: 30,
-  },
-  button: {
-    width: width - 40,
-    height: 50,
-    borderRadius: 15,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  buttonText: {
-    fontSize: 18,
-    color: '#fff',
-    alignItems: 'center',
-    fontWeight: '500',
-    letterSpacing: 1,
   },
 })
 

@@ -1,25 +1,18 @@
-import React, { useState, useRef, useEffect, useContext } from 'react'
+import React, { useState, useContext } from 'react'
 import {
-  View,
-  Text,
-  SafeAreaView,
-  KeyboardAvoidingView,
-  TextInput,
-  TouchableOpacity,
-  StyleSheet,
-  Dimensions,
+  View, Text, SafeAreaView, KeyboardAvoidingView, StyleSheet, Dimensions,
 } from 'react-native'
+import Button from '../components/Button'
+import PasswordInput from '../components/PasswordInput'
 import { AuthContext } from '../navigation/AuthProvider'
 
 const { width } = Dimensions.get('window')
 
 const PasswordInputScreen = ({ navigation }) => {
-  let textInput = useRef(null);
   const { signUp } = useContext(AuthContext)
 
   const [password, setPassword] = useState('')
   const [confirmPassword, setConfirmPassword] = useState('')
-  const [focusInput, setFocusInput] = useState(false)
 
   const onChangePassword = (text) => {
     setPassword(text)
@@ -34,18 +27,6 @@ const PasswordInputScreen = ({ navigation }) => {
     // navigation.navigate('OTPInput')
   };
 
-  const onChangeFocus = () => {
-    setFocusInput(true)
-  }
-
-  const onChangeBlur = () => {
-    setFocusInput(false)
-  }
-
-  useEffect(() => {
-    textInput.focus()
-  }, [])
-
   return (
     <SafeAreaView style={styles.container}>
       <KeyboardAvoidingView
@@ -54,35 +35,19 @@ const PasswordInputScreen = ({ navigation }) => {
         <Text style={styles.textTitle}>Step 3 of 3</Text>
         <View style={styles.wrapper}>
           <Text style={styles.title}>Enter your Password</Text>
-          <View style={styles.passwordInput}>
-            <TextInput
-              ref={input => (textInput = input)}
-              style={styles.password}
-              placeholder="Password"
-              secureTextEntry={true}
-              value={password}
-              onChangeText={onChangePassword}
-              autoFocus={focusInput}
-              onFocus={onChangeFocus}
-              onBlur={onChangeBlur}
-            />
-          </View>
+          <PasswordInput
+            val={password}
+            placeholder="Password"
+            onChangePassword={onChangePassword} />
 
-          <View style={styles.passwordInput}>
-            <TextInput
-              style={styles.password}
-              placeholder="Confirm Password"
-              secureTextEntry={true}
-              value={confirmPassword}
-              onChangeText={onChangeConfirmPassword}
-            />
-          </View>
+          <PasswordInput
+            val={confirmPassword}
+            placeholder="Confirm Password"
+            onChangePassword={onChangeConfirmPassword} />
         </View>
 
         <View style={styles.viewBottom}>
-          <TouchableOpacity style={styles.button} onPress={onPressFinishSignup} disabled={password !== confirmPassword}>
-            <Text style={styles.buttonText}>Finish</Text>
-          </TouchableOpacity>
+          <Button text="Finish" onPress={onPressFinishSignup} isDisabled={password !== confirmPassword} />
         </View>
 
       </KeyboardAvoidingView>
@@ -121,38 +86,10 @@ const styles = StyleSheet.create({
     marginBottom: 20,
     fontWeight: 'bold',
   },
-  passwordInput: {
-    marginTop: 10,
-    paddingVertical: 10,
-    paddingHorizontal: 12,
-    borderBottomWidth: 0.5,
-    borderBottomColor: '#d6d7da',
-    height: 50,
-    width: width - 40,
-  },
-  password: {
-    marginLeft: 5,
-    fontSize: 16,
-    color: '#222',
-  },
   viewBottom: {
     justifyContent: 'flex-end',
     alignItems: 'center',
     marginBottom: 40,
-  },
-  button: {
-    width: width - 40,
-    height: 50,
-    borderRadius: 15,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#0db665',
-  },
-  buttonText: {
-    fontSize: 16,
-    color: '#fff',
-    alignItems: 'center',
-    fontWeight: '500',
   },
 })
 

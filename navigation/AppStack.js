@@ -37,37 +37,7 @@ const AppStack = () => {
         name="HomeStack"
         component={HomeStackScreen}
         options={{
-          title: 'ParkIt',
-          headerStyle: {
-            backgroundColor: '#11111110',
-            shadowColor: 'transparent',
-            elevation: 0,
-          },
-          headerTintColor: '#fff',
-          headerTitleStyle: {
-            fontWeight: 'bold',
-          },
-          headerLeft: () => (
-            <View style={{ marginLeft: 10 }}>
-              <Ionicons.Button
-                name="ios-menu"
-                size={30}
-                color="black"
-                backgroundColor="transparent"
-                onPress={() => navigation.openDrawer()}
-              />
-            </View>
-          ),
-          headerRight: () => (
-            <View style={{ marginRight: 10 }}>
-              <Ionicons.Button
-                name="md-navigate-outline"
-                size={30}
-                color="black"
-                backgroundColor="transparent"
-              />
-            </View>
-          ),
+          headerShown: false,
         }}
       />
     </Drawer.Navigator>

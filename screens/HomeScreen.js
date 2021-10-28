@@ -4,16 +4,18 @@ import {
   View, Text, TextInput, Animated, TouchableOpacity, Platform, StyleSheet, Dimensions, _ScrollView
 } from 'react-native'
 import { Ionicons, MaterialCommunityIcons } from '@expo/vector-icons';
+import Slider from '@react-native-community/slider';
 
 import { markers, mapStandardStyle, categories } from '../utils/mapData';
 import { ScrollView } from 'react-native-gesture-handler';
 
 const { width, height } = Dimensions.get('window');
-const CARD_HEIGHT = 180;
+const CARD_HEIGHT = 200;
 const CARD_WIDTH = width * 0.8;
 const SPACING_FOR_CARD_INSET = width * 0.1 - 10;
 
-const HomeScreen = () => {
+const HomeScreen = (props) => {
+  const { navigation } = props;
   const initialMapState = {
     markers,
     region: {
@@ -111,21 +113,41 @@ const HomeScreen = () => {
               coordinate={marker.coordinate}
               onPress={onMarkerPress}>
               <Animated.View style={[styles.markerWrap]}>
-                <Ionicons name="ios-pin" size={30} color="#f00" />
+                <Animated.Image
+                  source={require('../assets/icons/parking-128.png')}
+                  style={[styles.marker, scaleStyle]}
+                  resizeMode="cover"
+                />
               </Animated.View>
             </MapView.Marker>
           );
         })}
       </MapView>
-      <View style={styles.searchBox}>
-        <TextInput
-          style={styles.searchInput}
-          placeholder="Search here"
-          placeholderTextColor="#999"
-          autoCapitalize="none"
-          autoCorrect={false}
-        />
-        <Ionicons name="ios-search" size={20} color="#999" />
+      <View style={styles.topWrapper}>
+        <View style={styles.top}>
+          <Ionicons.Button
+            name="ios-menu"
+            size={30}
+            color="#fff"
+            backgroundColor="#00000020"
+            onPress={() => navigation.openDrawer()} />
+          <Ionicons.Button
+            name="md-navigate-outline"
+            size={30}
+            color="#fff"
+            backgroundColor="#00000020"
+            onPress={() => { }} />
+        </View>
+        <View style={styles.searchBox}>
+          <TextInput
+            style={styles.searchInput}
+            placeholder="Search here"
+            placeholderTextColor="#999"
+            autoCapitalize="none"
+            autoCorrect={false}
+          />
+          <Ionicons name="ios-search" size={20} color="#999" />
+        </View>
       </View>
       <View style={styles.bottomWrapper}>
         <View>
@@ -195,13 +217,26 @@ const HomeScreen = () => {
                   </View>
                 </View>
                 <View style={styles.cardBody}>
-                  <Text style={styles.cardDescription}>available spots {marker.available_spots}</Text>
+                  <Text style={styles.cardDescription}>available spots:</Text>
+                  <View style={styles.cardSlider}>
+                    <Slider
+                      style={styles.slider}
+                      minimumValue={0}
+                      maximumValue={marker.total_spots}
+                      minimumTrackTintColor="#0db665"
+                      maximumTrackTintColor="#999"
+                      thumbTintColor="#0db665"
+                      value={marker.available_spots}
+                      disabled={true}
+                    />
+                    <Text style={styles.sliderDescription}>{marker.available_spots} out of {marker.total_spots}</Text>
+                  </View>
                 </View>
                 <View style={styles.cardFooter}>
                   <Text style={styles.cardFooterText}>Services available:</Text>
                   <View style={styles.cardFooterServices}>
                     {marker.services.map((service, index) => (
-                      <Text key={index} style={styles.cardFooterText}>
+                      <Text key={index} style={styles.servicesText}>
                         {service}
                       </Text>
                     ))}
@@ -225,9 +260,19 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
   },
-  searchBox: {
+  topWrapper: {
     position: 'absolute',
     marginTop: Platform.OS === 'ios' ? 40 : 20,
+    width: width,
+  },
+  top: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    paddingHorizontal: 20,
+    marginVertical: 10,
+  },
+  searchBox: {
     flexDirection: 'row',
     backgroundColor: '#fff',
     width: '90%',
@@ -241,13 +286,11 @@ const styles = StyleSheet.create({
     elevation: 10,
   },
   chipsScrollView: {
-    // backgroundColor: '#fff',
-    // position: 'absolute',
     top: Platform.OS === 'ios' ? 20 : 30,
     paddingHorizontal: 10,
   },
   chipIcon: {
-    marginRight: 10,
+    marginRight: 5,
   },
   chip: {
     flexDirection: 'row',
@@ -270,9 +313,6 @@ const styles = StyleSheet.create({
     left: 0,
     right: 0,
     padding: 10,
-    // backgroundColor: '#fff',
-    // width: width,
-    // height: Platform.OS === 'ios' ? '50%' : '60%',
   },
   scrollView: {
     paddingVertical: 10,
@@ -284,8 +324,7 @@ const styles = StyleSheet.create({
     padding: 10,
     elevation: 2,
     backgroundColor: '#FFF',
-    borderTopLeftRadius: 5,
-    borderTopRightRadius: 5,
+    borderRadius: 5,
     marginRight: 10,
     shadowColor: '#000',
     shadowRadius: 5,
@@ -298,11 +337,11 @@ const styles = StyleSheet.create({
   cardHeader: {
     flexDirection: 'row',
     justifyContent: 'space-between',
+    alignItems: 'center',
     paddingHorizontal: 10,
     paddingVertical: 10,
     borderBottomColor: '#ccc',
     borderBottomWidth: 1,
-    // marginBottom: 10,
   },
   cardTitle: {
     fontSize: 24,
@@ -312,10 +351,12 @@ const styles = StyleSheet.create({
   cardSubtitle: {
     fontSize: 18,
     color: '#333',
+    textAlign: 'right',
   },
   cardCaption: {
     fontSize: 14,
     color: '#999',
+    textAlign: 'right',
   },
   cardBody: {
     paddingHorizontal: 10,
@@ -326,6 +367,23 @@ const styles = StyleSheet.create({
   cardDescription: {
     fontSize: 14,
     color: '#333',
+  },
+  cardSlider: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+  },
+  slider: {
+    marginTop: 10,
+    marginBottom: 6,
+    width: CARD_WIDTH * 0.5,
+    height: 8,
+  },
+  sliderDescription: {
+    fontSize: 14,
+    color: '#0db665',
+    fontWeight: 'bold',
+    textAlign: 'right',
   },
   cardFooter: {
     paddingTop: 10,
@@ -342,9 +400,9 @@ const styles = StyleSheet.create({
     flexWrap: 'wrap',
     marginTop: 5,
   },
-  cardDescription: {
-    fontSize: 12,
-    color: '#444',
+  servicesText: {
+    fontSize: 14,
+    color: '#777',
   },
   markerWrap: {
     alignItems: 'center',

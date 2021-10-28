@@ -27,10 +27,17 @@ const DrawerContent = (props) => {
           <Drawer.Section style={styles.drawerSection}>
             <DrawerItem
               icon={({ size }) => (
-                <Ionicons name="ios-home" size={size} color="black" />
+                <Ionicons name="ios-home" size={size} color="#888" />
               )}
               label="Home"
               onPress={() => { props.navigation.navigate('Home') }}
+            />
+            <DrawerItem
+              icon={({ size }) => (
+                <Ionicons name="pause-circle-outline" size={size} color="#888" />
+              )}
+              label="Active Sessions"
+              onPress={() => { props.navigation.navigate('ActiveSessions') }}
             />
           </Drawer.Section>
         </View>

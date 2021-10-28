@@ -6,6 +6,7 @@ import { Ionicons } from '@expo/vector-icons';
 
 import HomeScreen from '../screens/HomeScreen';
 import DrawerContent from '../screens/DrawerContent';
+import ActiveSessions from '../screens/ActiveSessions';
 
 const HomeStack = createStackNavigator();
 
@@ -38,6 +39,23 @@ const AppStack = () => {
         component={HomeStackScreen}
         options={{
           headerShown: false,
+        }}
+      />
+      <Drawer.Screen
+        name="ActiveSessions"
+        component={ActiveSessions}
+        options={{
+          title: 'Active Sessions',
+          headerLeft: ({ navigation }) => (
+            <Ionicons.Button
+              name="ios-menu"
+              color="#222"
+              size={30}
+              backgroundColor="transparent"
+              style={{ marginLeft: 10 }}
+              onPress={() => navigation.openDrawer()}
+            />
+          ),
         }}
       />
     </Drawer.Navigator>

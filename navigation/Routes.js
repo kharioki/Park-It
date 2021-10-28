@@ -7,10 +7,8 @@ import { AuthContext } from './AuthProvider'
 
 const Routes = () => {
   const { user } = useContext(AuthContext)
-  const { phoneNumber, isAuthenticated } = user
+  const { isAuthenticated } = user
 
-  console.log('phoneNumber: ', phoneNumber);
-  console.log('isAuthenticated: ', isAuthenticated);
   return (
     <NavigationContainer>
       {!isAuthenticated ? <AuthStack /> : <AppStack />}

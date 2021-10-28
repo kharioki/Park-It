@@ -11,13 +11,13 @@ const Header = ({ drawerOpen, iconName }) => {
         <Ionicons.Button
           name="ios-menu"
           size={30}
-          color="#fff"
+          color="#000"
           backgroundColor="transparent"
           onPress={drawerOpen} />
         <Ionicons.Button
           name={iconName}
           size={30}
-          color="#fff"
+          color="#000"
           backgroundColor="transparent"
           onPress={() => { }} />
       </View>
@@ -38,17 +38,17 @@ const Header = ({ drawerOpen, iconName }) => {
 const styles = StyleSheet.create({
   topWrapper: {
     position: 'absolute',
-    marginTop: Platform.OS === 'ios' ? 40 : 20,
-    width: width - 10,
-    backgroundColor: '#00000030',
+    marginTop: Platform.OS === 'ios' ? 20 : 20,
+    width: width,
+    backgroundColor: '#79797920',
     alignSelf: 'center',
   },
   top: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    paddingHorizontal: 20,
-    marginTop: 10,
+    paddingHorizontal: 10,
+    marginTop: 5,
   },
   searchBox: {
     flexDirection: 'row',
@@ -62,7 +62,7 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.5,
     shadowRadius: 5,
     elevation: 10,
-    bottom: -15,
+    bottom: -5,
   },
   searchInput: {
     flex: 1,

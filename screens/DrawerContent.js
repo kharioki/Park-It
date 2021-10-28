@@ -15,7 +15,7 @@ const DrawerContent = (props) => {
             <View style={{ flexDirection: 'row', marginTop: 15 }}>
               <Avatar.Image
                 source={require('../assets/logo.png')}
-                size={50}
+                size={60}
               />
               <View style={{ marginLeft: 15, flexDirection: 'column' }}>
                 <Title style={styles.title}>{user ? user.phoneNumber : '+254720000000'}</Title>

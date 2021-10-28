@@ -19,6 +19,7 @@
     "react-native": "0.64.2",
     "react-native-confirmation-code-field": "^7.1.0",
     "react-native-gesture-handler": "~1.10.2",
+    "react-native-maps": "0.28.0",
     "react-native-onboarding-swiper": "^1.1.4",
     "react-native-paper": "^4.9.2",
     "react-native-reanimated": "~2.2.0",

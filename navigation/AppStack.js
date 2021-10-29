@@ -7,6 +7,7 @@ import { Ionicons } from '@expo/vector-icons';
 import HomeScreen from '../screens/HomeScreen';
 import DrawerContent from '../screens/DrawerContent';
 import ActiveSessions from '../screens/ActiveSessions';
+import DetailsScreen from '../screens/DetailsScreen';
 
 const HomeStack = createStackNavigator();
 const SessionsStack = createStackNavigator();
@@ -26,6 +27,14 @@ export const HomeStackScreen = ({ navigation }) => {
         options={{
           title: 'ParkIt',
 
+        }}
+      />
+      <HomeStack.Screen
+        name="Details"
+        component={DetailsScreen}
+        options={{
+          presentation: 'modal',
+          headerShown: false,
         }}
       />
     </HomeStack.Navigator>

@@ -23,13 +23,22 @@ const AuthProvider = ({ children }) => {
     })
   }
 
+  const endSession = () => {
+    setSession({
+      sessionId: 'abcd',
+      startTime: '',
+      endTime: new Date().toLocaleString(),
+      isActive: false,
+    })
+  }
+
   const signUp = (phoneNumber) => {
     setUser({ phoneNumber, isAuthenticated: true })
   }
 
   return (
     <AuthContext.Provider
-      value={{ user, signUp, session, startSession }}>
+      value={{ user, signUp, session, startSession, endSession }}>
       {children}
     </AuthContext.Provider>
   )

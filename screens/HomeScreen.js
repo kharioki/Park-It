@@ -3,7 +3,7 @@ import MapView, { PROVIDER_GOOGLE } from 'react-native-maps';
 import {
   View, Animated, Platform, StyleSheet, Dimensions, ScrollView, Text
 } from 'react-native'
-import { Ionicons, Entypo } from '@expo/vector-icons';
+import { MaterialCommunityIcons, Entypo } from '@expo/vector-icons';
 
 import { markers, mapStandardStyle, categories } from '../utils/mapData';
 import Header from '../components/Header';
@@ -33,6 +33,7 @@ const HomeScreen = (props) => {
 
   const [mapState, setMapState] = useState(initialMapState);
   const [selectedSession, setSelectedSession] = useState(null);
+  const [sessionEnded, setSessionEnded] = useState(false);
 
   const { session, startSession } = useContext(AuthContext);
 
@@ -98,7 +99,7 @@ const HomeScreen = (props) => {
   const _map = useRef(null);
   const _scrollView = useRef(null);
 
-  console.log(selectedSession)
+  console.log(session)
 
   return (
     <View style={styles.container}>
@@ -133,7 +134,13 @@ const HomeScreen = (props) => {
           );
         })}
       </MapView>
-      <Header drawerOpen={() => navigation.openDrawer()} iconName="md-navigate-outline" />
+      <Header
+        drawerOpen={() => navigation.openDrawer()}
+        iconName="md-navigate-outline"
+        hasActiveSession={session.isActive}
+        selected={selectedSession}
+        hasEnded={sessionEnded}
+      />
       <View style={styles.bottomWrapper}>
         {!session.isActive && selectedSession === null &&
           <View>
@@ -198,19 +205,44 @@ const HomeScreen = (props) => {
             <Button text="Go" onPress={() => setSelectedSession(markers[0])} />
           </View>
         }
-        {selectedSession &&
+        {selectedSession && !session.isActive &&
           <View style={styles.startSessionWrapper}>
-            <TouchableOpacity style={styles.cancelBtn} onPress={() => setSelectedSession(null)}>
-              <Ionicons name="md-close" size={30} color="red" />
+            <TouchableOpacity style={styles.btn} onPress={() => setSelectedSession(null)}>
+              <Entypo name="cross" size={30} color="red" />
               <Text style={styles.cancelBtnText}>Cancel</Text>
             </TouchableOpacity>
-            <TouchableOpacity styles={styles.infoBtn} onPress={() => { }}>
+            <TouchableOpacity style={styles.btn} onPress={() => navigation.navigate('Details')}>
               <Entypo name="info" size={30} color="#0db665" />
               <Text style={styles.infoBtnText}>Info</Text>
             </TouchableOpacity>
-            <TouchableOpacity style={styles.startBtn} onPress={() => startSession}>
+            <TouchableOpacity style={styles.startBtn} onPress={() => startSession()}>
+              <MaterialCommunityIcons name="car-convertible" size={30} color="white" />
               <Text style={styles.startBtnText}>Start Session</Text>
             </TouchableOpacity>
+          </View>
+        }
+        {session.isActive && selectedSession && !sessionEnded &&
+          <View style={styles.startSessionWrapper}>
+            <Button text="End Session" onPress={() => setSessionEnded(true)} />
+          </View>
+        }
+        {sessionEnded &&
+          <View style={styles.endSessionWrapper}>
+            <View style={styles.summaryCard}>
+              <View style={styles.summaryCardHeader}>
+                <Text style={styles.totalText}>Total</Text>
+                <Text style={styles.totalNumber}>700</Text>
+              </View>
+              <View style={styles.summaryCardBody}>
+                <Text style={styles.summaryText}>Parking</Text>
+                <Text style={styles.summaryNumber}>400</Text>
+              </View>
+              <View style={styles.summaryCardBody}>
+                <Text style={styles.summaryText}>Car wash</Text>
+                <Text style={styles.summaryNumber}>300</Text>
+              </View>
+            </View>
+            <Button text="Pay Up" onPress={() => setSessionEnded(false)} />
           </View>
         }
       </View>
@@ -229,10 +261,9 @@ const styles = StyleSheet.create({
   },
   bottomWrapper: {
     position: 'absolute',
-    bottom: 0,
+    bottom: 10,
     left: 0,
     right: 0,
-    // padding: 10,
   },
   scrollView: {
     paddingVertical: 10,
@@ -272,48 +303,92 @@ const styles = StyleSheet.create({
     paddingVertical: 10,
     marginBottom: 10,
   },
-  cancelBtn: {
+  btn: {
     paddingHorizontal: 10,
-    paddingVertical: 5,
-    borderRadius: 5,
+    paddingVertical: 10,
+    borderRadius: 10,
     backgroundColor: '#fff',
-    height: 60,
     alignItems: 'center',
+    justifyContent: 'center',
+    width: 100,
   },
   cancelBtnText: {
-    fontSize: 18,
+    fontSize: 14,
     color: 'red',
     fontWeight: 'bold',
     letterSpacing: 1,
   },
-  infoBtn: {
-    paddingHorizontal: 10,
-    paddingVertical: 5,
-    borderRadius: 5,
-    backgroundColor: '#ffffff',
-    height: 60,
-    alignItems: 'center',
-  },
   infoBtnText: {
-    fontSize: 18,
+    fontSize: 14,
     color: '#0db665',
     fontWeight: 'bold',
     letterSpacing: 1,
   },
   startBtn: {
     paddingHorizontal: 10,
-    paddingVertical: 5,
-    borderRadius: 5,
+    paddingVertical: 10,
+    borderRadius: 10,
     backgroundColor: '#0db665',
-    height: 60,
     alignItems: 'center',
     justifyContent: 'center',
   },
   startBtnText: {
-    fontSize: 18,
+    fontSize: 14,
     color: '#fff',
     fontWeight: 'bold',
     letterSpacing: 1,
+  },
+  endSessionWrapper: {
+    flexDirection: 'column',
+    justifyContent: 'center',
+    alignItems: 'center',
+    paddingHorizontal: 10,
+    paddingVertical: 10,
+    marginBottom: 10,
+  },
+  summaryCard: {
+    backgroundColor: '#fff',
+    borderRadius: 5,
+    paddingVertical: 10,
+    paddingHorizontal: 20,
+    marginBottom: 10,
+    width: width * 0.9,
+  },
+  summaryCardHeader: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginBottom: 10,
+    borderBottomWidth: 1,
+    borderBottomColor: '#ccc',
+    paddingVertical: 10,
+  },
+  totalText: {
+    fontSize: 18,
+    fontWeight: 'bold',
+    letterSpacing: 1,
+  },
+  totalNumber: {
+    fontSize: 18,
+    fontWeight: 'bold',
+    letterSpacing: 1,
+    color: '#0db665',
+  },
+  summaryCardBody: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginBottom: 10,
+  },
+  summaryText: {
+    fontSize: 14,
+    letterSpacing: 1,
+  },
+  summaryNumber: {
+    fontSize: 14,
+    fontWeight: 'bold',
+    letterSpacing: 1,
+    color: '#333',
   },
 })
 

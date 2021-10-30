@@ -35,7 +35,13 @@ const HomeScreen = (props) => {
   const [selectedSession, setSelectedSession] = useState(null);
   const [sessionEnded, setSessionEnded] = useState(false);
 
-  const { session, startSession } = useContext(AuthContext);
+  const { session, startSession, endSession } = useContext(AuthContext);
+
+  const handleEndSession = () => {
+    setSessionEnded(false);
+    setSelectedSession(null);
+    endSession();
+  }
 
   let mapIndex = 0;
   let mapAnimation = new Animated.Value(0);
@@ -222,7 +228,7 @@ const HomeScreen = (props) => {
           </View>
         }
         {session.isActive && selectedSession && !sessionEnded &&
-          <View style={styles.startSessionWrapper}>
+          <View style={styles.endSessionWrapper}>
             <Button text="End Session" onPress={() => setSessionEnded(true)} />
           </View>
         }
@@ -242,7 +248,7 @@ const HomeScreen = (props) => {
                 <Text style={styles.summaryNumber}>300</Text>
               </View>
             </View>
-            <Button text="Pay Up" onPress={() => setSessionEnded(false)} />
+            <Button text="Pay Up" onPress={handleEndSession} />
           </View>
         }
       </View>
@@ -301,7 +307,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     paddingHorizontal: 10,
     paddingVertical: 10,
-    marginBottom: 10,
+    // marginBottom: 10,
   },
   btn: {
     paddingHorizontal: 10,
@@ -344,7 +350,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     paddingHorizontal: 10,
     paddingVertical: 10,
-    marginBottom: 10,
+    // marginBottom: 10,
   },
   summaryCard: {
     backgroundColor: '#fff',

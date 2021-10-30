@@ -1,6 +1,6 @@
 import React from 'react'
 import {
-  View, SafeAreaView, Text, StyleSheet, Dimensions, ScrollView, TouchableOpacity
+  View, SafeAreaView, Text, StyleSheet, ScrollView, TouchableOpacity
 } from 'react-native'
 
 const activeSessions = [
@@ -12,14 +12,12 @@ const activeSessions = [
   },
 ];
 
-const { width, height } = Dimensions.get('window');
 const ActiveSessions = () => {
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.activeWrapper}>
-        <View style={styles.titleRow}>
-          <Text style={styles.title}>Active Sessions</Text>
-          <Text style={styles.viewAll}>View All</Text>
+        <View style={styles.titleHeader}>
+          <Text style={styles.title}>{activeSessions.length} Active Session</Text>
         </View>
         <ScrollView style={styles.scrollView}>
           {
@@ -56,13 +54,6 @@ const ActiveSessions = () => {
           }
         </ScrollView>
       </View>
-      <View style={styles.completedWrapper}>
-        <View style={styles.titleRow}>
-          <Text style={styles.title}>Active Sessions</Text>
-          <Text style={styles.viewAll}>View All</Text>
-        </View>
-        <Text>Complete Sessions</Text>
-      </View>
     </SafeAreaView>
   )
 }
@@ -72,27 +63,19 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#fff',
   },
-  titleRow: {
+  titleHeader: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    paddingVertical: 10,
+    padding: 10,
+    marginBottom: 10,
   },
   title: {
-    fontSize: 14,
-    color: '#333',
-  },
-  viewAll: {
-    fontSize: 14,
+    fontSize: 16,
+    fontWeight: 'bold',
     color: '#0db665',
   },
   activeWrapper: {
-    paddingHorizontal: 20,
-    paddingVertical: 20,
-    borderBottomWidth: 1,
-    borderBottomColor: '#e2e2e2',
-  },
-  completedWrapper: {
     paddingHorizontal: 20,
     paddingVertical: 20,
   },

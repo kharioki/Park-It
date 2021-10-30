@@ -2,7 +2,7 @@ import React, { useContext } from 'react'
 import { View, StyleSheet } from 'react-native'
 import { Avatar, Title, Caption, Drawer } from 'react-native-paper'
 import { DrawerContentScrollView, DrawerItem } from '@react-navigation/drawer'
-import { Ionicons } from '@expo/vector-icons';
+import { Ionicons, MaterialCommunityIcons } from '@expo/vector-icons';
 import { AuthContext } from '../navigation/AuthProvider'
 
 const DrawerContent = (props) => {
@@ -27,19 +27,27 @@ const DrawerContent = (props) => {
           <Drawer.Section style={styles.drawerSection}>
             <DrawerItem
               icon={({ size }) => (
-                <Ionicons name="ios-home" size={size} color="#888" />
+                <Ionicons name="ios-home" size={size} color="#0db665" />
               )}
               label="Home"
               onPress={() => { props.navigation.navigate('HomeStack') }}
             />
             <DrawerItem
               icon={({ size }) => (
-                <Ionicons name="pause-circle-outline" size={size} color="#888" />
+                <Ionicons name="pause-circle-outline" size={size} color="#0db665" />
               )}
               label="Active Sessions"
               onPress={() => { props.navigation.navigate('SessionsStack') }}
             />
+            <DrawerItem
+              icon={({ size }) => (
+                <MaterialCommunityIcons name="history" size={size} color="#0db665" />
+              )}
+              label="Completed Sessions"
+              onPress={() => { props.navigation.navigate('HistoryStack') }}
+            />
           </Drawer.Section>
+
         </View>
       </DrawerContentScrollView>
     </View>
@@ -58,6 +66,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
     marginTop: 3,
     fontWeight: 'bold',
+    color: '#0db665',
   },
   caption: {
     fontSize: 14,

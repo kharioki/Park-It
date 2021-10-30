@@ -1,5 +1,5 @@
 import React from 'react'
-import { View, Text, StyleSheet } from 'react-native'
+import { View, Text, StyleSheet, ScrollView } from 'react-native'
 import { Ionicons, MaterialCommunityIcons } from '@expo/vector-icons'
 import Button from '../components/Button'
 
@@ -10,12 +10,12 @@ const DetailsScreen = ({ navigation }) => {
         <Text style={styles.headerText}>Details Screen</Text>
         <Ionicons.Button
           name="ios-close"
-          size={32}
+          size={30}
           color="#888"
           backgroundColor="transparent"
           onPress={() => navigation.goBack()} />
       </View>
-      <View style={styles.body}>
+      <ScrollView style={styles.body}>
         <View style={styles.sessionContent}>
           <View style={styles.contentRow}>
             <View style={styles.leftItem}>
@@ -101,10 +101,11 @@ const DetailsScreen = ({ navigation }) => {
           <Button text="View rules" isClear />
         </View>
 
-      </View>
-      <View style={styles.contentBottom}>
-        <Button text="Start Session" />
-      </View>
+        <View style={styles.contentBottom}>
+          <Button text="Start Session" />
+        </View>
+      </ScrollView>
+
     </View>
   )
 }
@@ -118,20 +119,21 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    padding: 10,
-    marginBottom: 10,
+    // padding: 8,
+    // marginBottom: 10,
   },
   headerText: {
-    fontSize: 18,
+    fontSize: 16,
     color: '#0db665',
+    marginLeft: 10,
   },
   body: {
     flex: 1,
     paddingHorizontal: 10,
   },
   sessionContent: {
-    padding: 10,
-    marginBottom: 10,
+    padding: 8,
+    // marginBottom: 10,
     borderBottomWidth: 0.5,
     borderBottomColor: '#ddd',
   },
@@ -139,7 +141,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    marginBottom: 10,
+    marginBottom: 4,
   },
   leftItem: {
     flexDirection: 'column',
@@ -153,7 +155,7 @@ const styles = StyleSheet.create({
     color: '#ddd',
   },
   rightItem: {
-    padding: 10,
+    padding: 5,
     borderRadius: 5,
     backgroundColor: '#0db665',
   },

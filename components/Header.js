@@ -62,7 +62,7 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
   },
   top: {
-    marginTop: Platform.OS === 'ios' ? 50 : 60,
+    marginTop: Platform.OS === 'ios' ? 30 : 60,
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
@@ -90,7 +90,7 @@ const styles = StyleSheet.create({
   sessionContainer: {
     width: '90%',
     alignSelf: 'center',
-    marginTop: 10,
+    // marginTop: 10,
     padding: 10,
   },
   sessionInfo: {

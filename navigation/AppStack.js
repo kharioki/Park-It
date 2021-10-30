@@ -8,9 +8,11 @@ import HomeScreen from '../screens/HomeScreen';
 import DrawerContent from '../screens/DrawerContent';
 import ActiveSessions from '../screens/ActiveSessions';
 import DetailsScreen from '../screens/DetailsScreen';
+import HistoryScreen from '../screens/HistoryScreen';
 
 const HomeStack = createStackNavigator();
 const SessionsStack = createStackNavigator();
+const HistoryStack = createStackNavigator();
 
 const Drawer = createDrawerNavigator();
 
@@ -65,6 +67,30 @@ export const SessionsStackScreen = ({ navigation }) => {
   )
 };
 
+export const HistoryStackScreen = ({ navigation }) => {
+  return (
+    <HistoryStack.Navigator>
+      <HistoryStack.Screen
+        name="History"
+        component={HistoryScreen}
+        options={{
+          title: 'Completed Sessions',
+          headerLeft: () => (
+            <Ionicons.Button
+              name="ios-menu"
+              color="#222"
+              size={30}
+              backgroundColor="transparent"
+              style={{ marginLeft: 10 }}
+              onPress={() => navigation.openDrawer()}
+            />
+          ),
+        }}
+      />
+    </HistoryStack.Navigator>
+  )
+};
+
 const AppStack = ({ navigation }) => {
   return (
     <Drawer.Navigator drawerContent={(props) => <DrawerContent {...props} />}>
@@ -78,6 +104,13 @@ const AppStack = ({ navigation }) => {
       <Drawer.Screen
         name="SessionsStack"
         component={SessionsStackScreen}
+        options={{
+          headerShown: false,
+        }}
+      />
+      <Drawer.Screen
+        name="HistoryStack"
+        component={HistoryStackScreen}
         options={{
           headerShown: false,
         }}

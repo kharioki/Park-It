@@ -26,7 +26,7 @@ const ParkingCard = ({ marker }) => {
             minimumTrackTintColor="#0db665"
             maximumTrackTintColor="#999"
             thumbTintColor="#0db665"
-            value={marker.available_spots}
+            value={marker.total_spots - marker.available_spots}
             disabled={true}
           />
           <Text style={styles.sliderDescription}>{marker.available_spots} out of {marker.total_spots}</Text>

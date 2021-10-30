@@ -114,7 +114,7 @@ const styles = StyleSheet.create({
   },
   cardFooter: {
     paddingTop: 10,
-    paddingBottom: 10,
+    // paddingBottom: 10,
     paddingHorizontal: 10,
   },
   cardFooterText: {

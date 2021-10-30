@@ -119,8 +119,6 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    // padding: 8,
-    // marginBottom: 10,
   },
   headerText: {
     fontSize: 16,
@@ -133,7 +131,6 @@ const styles = StyleSheet.create({
   },
   sessionContent: {
     padding: 8,
-    // marginBottom: 10,
     borderBottomWidth: 0.5,
     borderBottomColor: '#ddd',
   },

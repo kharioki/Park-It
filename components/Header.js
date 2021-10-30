@@ -31,7 +31,9 @@ const Header = ({ drawerOpen, iconName, hasActiveSession, selected, hasEnded }) 
           value={selected?.name}
           disabled={hasActiveSession || hasEnded}
         />
-        <Ionicons name="ios-search" size={20} color="#999" />
+        {!hasActiveSession && !selected && !hasEnded && (
+          <Ionicons name="ios-search" size={20} color="#999" />
+        )}
       </View>
 
       {hasActiveSession && selected && !hasEnded && (
@@ -60,9 +62,10 @@ const styles = StyleSheet.create({
     width: width,
     backgroundColor: '#79797920',
     alignSelf: 'center',
+    paddingBottom: 10,
   },
   top: {
-    marginTop: Platform.OS === 'ios' ? 30 : 60,
+    marginTop: Platform.OS === 'ios' ? 35 : 40,
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',

@@ -2,6 +2,7 @@ import React from 'react'
 import { View, Text, StyleSheet, ScrollView } from 'react-native'
 import { Ionicons, MaterialCommunityIcons } from '@expo/vector-icons'
 import Button from '../components/Button'
+import ServicesRow from '../components/ServicesRow'
 
 const DetailsScreen = ({ navigation }) => {
   return (
@@ -42,42 +43,10 @@ const DetailsScreen = ({ navigation }) => {
 
         <View style={styles.sessionContent}>
           <Text style={styles.title}>Parking available for:</Text>
-          <View style={styles.contentRow}>
-            <View style={styles.row}>
-              <Ionicons name="ios-car" size={24} color="#0db665" style={{ marginRight: 5 }} />
-              <Text style={styles.text}>Sedan / Suv / Saloon / Coupe</Text>
-            </View>
-            <View style={styles.check}>
-              <Ionicons name="ios-checkmark" size={16} color="#0db665" />
-            </View>
-          </View>
-          <View style={styles.contentRow}>
-            <View style={styles.row}>
-              <MaterialCommunityIcons name="motorbike" size={24} color="#0db665" style={{ marginRight: 5 }} />
-              <Text style={styles.text}>Motorbike</Text>
-            </View>
-            <View style={styles.check}>
-              <Ionicons name="ios-checkmark" size={16} color="#0db665" />
-            </View>
-          </View>
-          <View style={styles.contentRow}>
-            <View style={styles.row}>
-              <MaterialCommunityIcons name="bike" size={24} color="#0db665" style={{ marginRight: 5 }} />
-              <Text style={styles.text}>Bicycle</Text>
-            </View>
-            <View style={styles.check}>
-              <Ionicons name="ios-checkmark" size={16} color="#0db665" />
-            </View>
-          </View>
-          <View style={styles.contentRow}>
-            <View style={styles.row}>
-              <MaterialCommunityIcons name="truck" size={24} color="#0db665" style={{ marginRight: 5 }} />
-              <Text style={styles.text}>Truck / Van / Bus</Text>
-            </View>
-            <View style={styles.check}>
-              <Ionicons name="ios-checkmark" size={16} color="#0db665" />
-            </View>
-          </View>
+          <ServicesRow carType={1} available />
+          <ServicesRow carType={2} available />
+          <ServicesRow carType={3} available={false} />
+          <ServicesRow carType={4} available={false} />
         </View>
 
         <View style={styles.sessionContent}>
@@ -94,11 +63,6 @@ const DetailsScreen = ({ navigation }) => {
               <Text style={styles.text}>24 Hour Services</Text>
             </View>
           </View>
-        </View>
-
-        <View style={styles.sessionContent}>
-          <Text style={styles.title}>Parking Rules:</Text>
-          <Button text="View rules" isClear />
         </View>
 
         <View style={styles.contentBottom}>
@@ -187,6 +151,7 @@ const styles = StyleSheet.create({
     borderColor: '#0db665',
   },
   contentBottom: {
+    marginTop: 20,
     marginBottom: 10,
   },
 })

@@ -6,7 +6,7 @@ import { Ionicons, MaterialCommunityIcons } from '@expo/vector-icons';
 import { AuthContext } from '../navigation/AuthProvider'
 
 const DrawerContent = (props) => {
-  const { user } = useContext(AuthContext)
+  const { user, signOut } = useContext(AuthContext)
   const [visible, setVisible] = useState(false);
 
   const onToggleSnackBar = () => setVisible(!visible);
@@ -80,6 +80,17 @@ const DrawerContent = (props) => {
 
         </View>
       </DrawerContentScrollView>
+
+      <Drawer.Section style={styles.bottomDrawerSection}>
+        <DrawerItem
+          icon={({ size }) => (
+            <MaterialCommunityIcons name="exit-to-app" size={size} color="#0db665" />
+          )}
+          label="Sign Out"
+          onPress={() => signOut()}
+        />
+      </Drawer.Section>
+
       <Snackbar
         visible={visible}
         onDismiss={onDismissSnackBar}
@@ -140,7 +151,12 @@ const styles = StyleSheet.create({
   btnText: {
     fontSize: 16,
     color: '#0db665',
-  }
+  },
+  bottomDrawerSection: {
+    marginBottom: 15,
+    borderTopColor: '#f4f4f4',
+    borderTopWidth: 1
+  },
 })
 
 export default DrawerContent

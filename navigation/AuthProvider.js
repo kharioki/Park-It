@@ -36,9 +36,13 @@ const AuthProvider = ({ children }) => {
     setUser({ phoneNumber, isAuthenticated: true })
   }
 
+  const signOut = () => {
+    setUser({ phoneNumber: '', isAuthenticated: false })
+  }
+
   return (
     <AuthContext.Provider
-      value={{ user, signUp, session, startSession, endSession }}>
+      value={{ user, signUp, session, startSession, endSession, signOut }}>
       {children}
     </AuthContext.Provider>
   )

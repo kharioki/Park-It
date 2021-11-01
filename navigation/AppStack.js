@@ -9,10 +9,12 @@ import DrawerContent from '../screens/DrawerContent';
 import ActiveSessions from '../screens/ActiveSessions';
 import DetailsScreen from '../screens/DetailsScreen';
 import HistoryScreen from '../screens/HistoryScreen';
+import CreateLotScreen from '../screens/CreateLotScreen';
 
 const HomeStack = createStackNavigator();
 const SessionsStack = createStackNavigator();
 const HistoryStack = createStackNavigator();
+const LotStack = createStackNavigator();
 
 const Drawer = createDrawerNavigator();
 
@@ -67,6 +69,30 @@ export const SessionsStackScreen = ({ navigation }) => {
   )
 };
 
+export const LotStackScreen = ({ navigation }) => {
+  return (
+    <LotStack.Navigator>
+      <LotStack.Screen
+        name="CreateLot"
+        component={CreateLotScreen}
+        options={{
+          title: 'Add a Parking Lot',
+          headerLeft: () => (
+            <Ionicons.Button
+              name="ios-menu"
+              color="#222"
+              size={30}
+              backgroundColor="transparent"
+              style={{ marginLeft: 10 }}
+              onPress={() => navigation.openDrawer()}
+            />
+          ),
+        }}
+      />
+    </LotStack.Navigator>
+  )
+};
+
 export const HistoryStackScreen = ({ navigation }) => {
   return (
     <HistoryStack.Navigator>
@@ -111,6 +137,13 @@ const AppStack = ({ navigation }) => {
       <Drawer.Screen
         name="HistoryStack"
         component={HistoryStackScreen}
+        options={{
+          headerShown: false,
+        }}
+      />
+      <Drawer.Screen
+        name="LotStack"
+        component={LotStackScreen}
         options={{
           headerShown: false,
         }}

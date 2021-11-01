@@ -51,6 +51,13 @@ const DrawerContent = (props) => {
               label="Completed Sessions"
               onPress={() => { props.navigation.navigate('HistoryStack') }}
             />
+            <DrawerItem
+              icon={({ size }) => (
+                <MaterialCommunityIcons name="car-multiple" size={size} color="#0db665" />
+              )}
+              label="Create Lot"
+              onPress={() => { props.navigation.navigate('LotStack') }}
+            />
           </Drawer.Section>
 
           {/* <Drawer.Section title="Preferences">

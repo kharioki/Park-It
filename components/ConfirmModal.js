@@ -38,6 +38,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
     color: '#888',
     marginBottom: 10,
+    lineHeight: 20,
   },
   optionsRow: {
     flexDirection: 'row',

@@ -65,9 +65,9 @@ const DetailsScreen = ({ navigation }) => {
           </View>
         </View>
 
-        <View style={styles.contentBottom}>
+        {/* <View style={styles.contentBottom}>
           <Button text="Start Session" />
-        </View>
+        </View> */}
       </ScrollView>
 
     </View>
@@ -83,6 +83,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
+    marginBottom: 10,
   },
   headerText: {
     fontSize: 16,
@@ -102,7 +103,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    marginBottom: 6,
+    marginBottom: 8,
   },
   leftItem: {
     flexDirection: 'column',

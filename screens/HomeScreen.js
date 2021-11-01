@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect, useContext } from 'react'
 import MapView, { PROVIDER_GOOGLE } from 'react-native-maps';
 import {
-  View, Animated, Platform, StyleSheet, Dimensions, ScrollView, Text
+  View, Animated, Platform, StyleSheet, Dimensions, ScrollView, Text, TouchableOpacity
 } from 'react-native'
 import { MaterialCommunityIcons, Entypo } from '@expo/vector-icons';
 
@@ -10,9 +10,10 @@ import Header from '../components/Header';
 import Chip from '../components/Chip';
 import ParkingCard from '../components/ParkingCard';
 import Button from '../components/Button';
+import RegModal from '../components/RegModal';
+import ConfirmModal from '../components/ConfirmModal';
 
 import { AuthContext } from '../navigation/AuthProvider';
-import { TouchableOpacity } from 'react-native-gesture-handler';
 
 const { width } = Dimensions.get('window');
 const CARD_WIDTH = width * 0.8;
@@ -34,13 +35,28 @@ const HomeScreen = (props) => {
   const [mapState, setMapState] = useState(initialMapState);
   const [selectedSession, setSelectedSession] = useState(null);
   const [sessionEnded, setSessionEnded] = useState(false);
+  const [modalVisible, setModalVisible] = useState(false);
+  const [regNumber, setRegNumber] = useState('');
+  const [confirmModalVisible, setConfirmModalVisible] = useState(false);
 
   const { session, startSession, endSession } = useContext(AuthContext);
+
+  const showModal = () => setModalVisible(true);
+  const hideModal = () => setModalVisible(false);
+
+  const showConfirmModal = () => setConfirmModalVisible(true);
+  const hideConfirmModal = () => setConfirmModalVisible(false);
 
   const handleEndSession = () => {
     setSessionEnded(false);
     setSelectedSession(null);
+    setRegNumber('');
     endSession();
+  }
+
+  const handleConfirmEndSession = () => {
+    setSessionEnded(true);
+    setConfirmModalVisible(false);
   }
 
   let mapIndex = 0;
@@ -221,7 +237,7 @@ const HomeScreen = (props) => {
               <Entypo name="info" size={30} color="#0db665" />
               <Text style={styles.infoBtnText}>Info</Text>
             </TouchableOpacity>
-            <TouchableOpacity style={styles.startBtn} onPress={() => startSession()}>
+            <TouchableOpacity style={styles.startBtn} onPress={() => showModal()}>
               <MaterialCommunityIcons name="car-convertible" size={30} color="white" />
               <Text style={styles.startBtnText}>Start Session</Text>
             </TouchableOpacity>
@@ -229,7 +245,7 @@ const HomeScreen = (props) => {
         }
         {session.isActive && selectedSession && !sessionEnded &&
           <View style={styles.endSessionWrapper}>
-            <Button text="End Session" onPress={() => setSessionEnded(true)} />
+            <Button text="End Session" onPress={() => showConfirmModal()} />
           </View>
         }
         {sessionEnded &&
@@ -252,6 +268,20 @@ const HomeScreen = (props) => {
           </View>
         }
       </View>
+      <RegModal
+        visible={modalVisible}
+        onHideModal={hideModal}
+        onStartSession={startSession}
+        regNumber={regNumber}
+        onChangeRegNumber={setRegNumber}
+      />
+
+      <ConfirmModal
+        visible={confirmModalVisible}
+        onHideConfirmModal={hideConfirmModal}
+        regNumber={regNumber}
+        confirmEndSession={handleConfirmEndSession}
+      />
     </View>
   )
 

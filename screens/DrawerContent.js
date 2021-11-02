@@ -51,13 +51,6 @@ const DrawerContent = (props) => {
               label="Completed Sessions"
               onPress={() => { props.navigation.navigate('HistoryStack') }}
             />
-            <DrawerItem
-              icon={({ size }) => (
-                <MaterialCommunityIcons name="car-multiple" size={size} color="#0db665" />
-              )}
-              label="Create Lot"
-              onPress={() => { props.navigation.navigate('LotStack') }}
-            />
           </Drawer.Section>
 
           {/* <Drawer.Section title="Preferences">
@@ -74,11 +67,11 @@ const DrawerContent = (props) => {
           <Drawer.Section title="Wallet">
             <View onPress={() => { }}>
               <View style={styles.preference}>
-                <Text>Celo</Text>
+                <Text>Wallet</Text>
                 <TouchableRipple onPress={onToggleSnackBar}>
                   <View style={styles.btn}>
                     <Image source={require('../assets/icons/Celo-Glyph-Color.png')} style={styles.icon} />
-                    <Text style={styles.btnText}>Connect</Text>
+                    <Text style={styles.btnText}>Celo</Text>
                   </View>
                 </TouchableRipple>
               </View>

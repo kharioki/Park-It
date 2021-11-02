@@ -51,11 +51,6 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
     paddingVertical: 10,
   },
-  headerText: {
-    fontSize: 20,
-    letterSpacing: 1,
-    color: '#0db665',
-  },
   bodyRow: {
     flexDirection: 'row',
     justifyContent: 'space-between',
@@ -73,7 +68,7 @@ const styles = StyleSheet.create({
   },
   buttonText: {
     fontSize: 16,
-    fontWeight: 'bold',
+    fontWeight: '400',
     color: '#fff',
   },
   subHeader: {
@@ -81,7 +76,8 @@ const styles = StyleSheet.create({
     paddingVertical: 10,
   },
   subHeaderText: {
-    fontSize: 20,
+    fontSize: 16,
+    fontWeight: 'bold',
     color: '#0db665',
     letterSpacing: 1,
   },

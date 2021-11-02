@@ -1,9 +1,13 @@
-import React from 'react'
+import React, { useState, useRef } from 'react'
 import { View, Text, TextInput, TouchableOpacity, StyleSheet } from 'react-native'
-import { Modal } from 'react-native-paper'
+import { Modal, RadioButton } from 'react-native-paper'
 import { MaterialCommunityIcons } from '@expo/vector-icons'
 
+import { carTypes } from '../utils/carTypes'
+
 const RegModal = ({ visible, onStartSession, onHideModal, regNumber, onChangeRegNumber }) => {
+  const [selectedCarType, setSelectedCarType] = useState(1)
+
   const onSubmit = () => {
     onStartSession()
     onHideModal()
@@ -21,6 +25,16 @@ const RegModal = ({ visible, onStartSession, onHideModal, regNumber, onChangeReg
           autoCorrect={false}
           autoCapitalize="characters"
           onChangeText={(text) => onChangeRegNumber(text)} />
+
+        <View style={styles.radioContainer}>
+          <Text style={styles.text}>Vehicle Type:</Text>
+          <RadioButton.Group value={selectedCarType} onValueChange={value => setSelectedCarType(value)}>
+            {carTypes.map(({ value, name }, index) => (
+              <RadioButton.Item key={index} value={value} label={name} color="#0db665" uncheckedColor="#0db665" />
+            ))}
+          </RadioButton.Group>
+        </View>
+
         <TouchableOpacity
           style={[styles.startBtn, { backgroundColor: regNumber.length > 0 ? '#0db665' : 'gray' }]}
           disabled={regNumber.length === 0}
@@ -51,6 +65,19 @@ const styles = StyleSheet.create({
     padding: 10,
     marginBottom: 10,
     borderRadius: 5,
+  },
+  picker: {
+    borderWidth: 0.5,
+    borderColor: '#ccc',
+    padding: 10,
+    marginBottom: 10,
+    borderRadius: 5,
+  },
+  radioContainer: {
+    marginBottom: 10,
+  },
+  radioGroup: {
+    marginBottom: 10,
   },
   startBtn: {
     flexDirection: 'row',

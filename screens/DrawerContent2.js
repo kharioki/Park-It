@@ -60,11 +60,11 @@ const DrawerContent = (props) => {
           <Drawer.Section title="Wallet">
             <View onPress={() => { }}>
               <View style={styles.preference}>
-                <Text>Celo</Text>
+                <Text>Wallet</Text>
                 <TouchableRipple onPress={onToggleSnackBar}>
                   <View style={styles.btn}>
                     <Image source={require('../assets/icons/Celo-Glyph-Color.png')} style={styles.icon} />
-                    <Text style={styles.btnText}>Connect</Text>
+                    <Text style={styles.btnText}>Celo</Text>
                   </View>
                 </TouchableRipple>
               </View>

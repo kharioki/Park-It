@@ -2,28 +2,10 @@ import React from 'react'
 import { View, Text, StyleSheet } from 'react-native'
 import { MaterialCommunityIcons } from '@expo/vector-icons'
 import moment from 'moment'
-
-const carTypes = [
-  {
-    id: 1,
-    name: 'car',
-  },
-  {
-    id: 2,
-    name: 'truck',
-  },
-  {
-    id: 3,
-    name: 'motorbike',
-  },
-  {
-    id: 4,
-    name: 'bike',
-  }
-]
+import { carTypes } from '../utils/carTypes'
 
 const RowCard = ({ carType, regNumber, lotName, startTime }) => {
-  const iconName = carTypes.find(type => type.id === carType).name
+  const iconName = carTypes.find(type => type.value === carType).name
   return (
     <View style={styles.scrollCard}>
       <View style={styles.scrollCardIcon}>
@@ -66,25 +48,25 @@ const styles = StyleSheet.create({
   scrollCardTextTitle: {
     fontSize: 18,
     color: '#fff',
-    fontWeight: 'bold',
+    fontWeight: '600',
     letterSpacing: 1,
+    marginBottom: 5,
   },
   scrollCardTextSubtitle: {
     fontSize: 14,
-    color: '#fff',
+    color: '#666',
     letterSpacing: 1,
   },
   scrollCardTime: {
     fontSize: 18,
     color: '#fff',
-    fontWeight: 'bold',
+    fontWeight: '500',
     letterSpacing: 1,
     textAlign: 'right',
   },
   scrollCardTimeSubtitle: {
     fontSize: 14,
     color: '#555',
-    // letterSpacing: 1,
     textAlign: 'right',
   },
 })

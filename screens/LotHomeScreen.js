@@ -1,24 +1,42 @@
 import React from 'react'
-import { SafeAreaView, View, Text, StyleSheet, Dimensions } from 'react-native'
-import OwnerStack from '../navigation/OwnerStack'
+import {
+  View, Text, StyleSheet, Dimensions, TouchableOpacity, ScrollView
+} from 'react-native'
 
-const { width, height } = Dimensions.get('window')
+import { activeSessions } from '../utils/sampleData'
+import RowCard from '../components/RowCard'
+import StatsCard from '../components/StatsCard'
 
-const LotHomeScreen = () => {
+const { width } = Dimensions.get('window')
+
+const LotHomeScreen = ({ navigation }) => {
   return (
     <View style={styles.container}>
       <View style={styles.header}>
-        <Text style={styles.headerText}>Lot Home Screen</Text>
+        <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('Create')}>
+          <Text style={styles.buttonText}>Add a Parking Lot</Text>
+        </TouchableOpacity>
       </View>
-      <View style={styles.bodyWrapper}>
-        <View style={styles.card}>
-          <Text style={styles.cardNumber}>2</Text>
-          <Text style={styles.cardText}>Lots added</Text>
-        </View>
-        <View style={styles.card}>
-          <Text style={styles.cardNumber}>28</Text>
-          <Text style={styles.cardText}>Active sessions</Text>
-        </View>
+      <View style={styles.subHeader}>
+        <Text style={styles.subHeaderText}>Summary</Text>
+      </View>
+      <View style={styles.bodyRow}>
+        <StatsCard value={1} text="Lot Added" />
+        <StatsCard value={28} text="Active Sessions" />
+      </View>
+      <View style={styles.bodyRow}>
+        <StatsCard value={400} text="Completed Sessions" />
+        <StatsCard value={'28K'} text="Total Paid" />
+      </View>
+      <View style={styles.subHeader}>
+        <Text style={styles.subHeaderText}>Active Sessions</Text>
+      </View>
+      <View style={styles.scrollWrapper}>
+        <ScrollView >
+          {activeSessions.map((session, index) => (
+            <RowCard key={index} {...session} />
+          ))}
+        </ScrollView>
       </View>
     </View>
   )
@@ -30,37 +48,51 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
   },
   header: {
-    padding: 20,
+    paddingHorizontal: 20,
+    paddingVertical: 10,
   },
   headerText: {
     fontSize: 20,
-    fontWeight: 'bold',
+    letterSpacing: 1,
     color: '#0db665',
   },
-  bodyWrapper: {
+  bodyRow: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    padding: 20,
+    paddingHorizontal: 20,
+    marginBottom: 10,
   },
-  card: {
-    backgroundColor: '#0db66510',
-    width: width / 2 - 40,
-    height: 120,
-    padding: 20,
-    marginBottom: 20,
-    borderRadius: 10,
+  button: {
+    width: width * 0.4,
+    height: 50,
+    backgroundColor: '#0db665',
+    borderRadius: 25,
     justifyContent: 'center',
     alignItems: 'center',
   },
-  cardNumber: {
-    fontSize: 40,
+  buttonText: {
+    fontSize: 16,
     fontWeight: 'bold',
-    color: '#888',
+    color: '#fff',
   },
-  cardText: {
+  subHeader: {
+    paddingHorizontal: 20,
+    paddingVertical: 10,
+  },
+  subHeaderText: {
     fontSize: 20,
-    color: '#888',
+    color: '#0db665',
+    letterSpacing: 1,
+  },
+  scrollWrapper: {
+    flex: 1,
+    paddingVertical: 10,
+    paddingHorizontal: 20,
+    backgroundColor: '#0db665',
+    bottom: 0,
+    borderTopLeftRadius: 20,
+    borderTopRightRadius: 20,
   },
 })
 

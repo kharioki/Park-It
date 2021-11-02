@@ -1,0 +1,51 @@
+export const activeSessions = [
+  {
+    id: '1',
+    carType: 1,
+    regNumber: 'KA-01-AA-1234',
+    lotName: 'Lot 1',
+    startTime: '2021-11-02T10:00:00.000Z',
+  },
+  {
+    id: '2',
+    carType: 1,
+    regNumber: 'KA-01-AA-1234',
+    lotName: 'Lot 1',
+    startTime: '2021-11-02T14:25:00.000Z',
+  },
+  {
+    id: '3',
+    carType: 3,
+    regNumber: 'KA-01-AA-1234',
+    lotName: 'Lot 2',
+    startTime: '2021-11-02T13:11:00.000Z',
+  },
+  {
+    id: '4',
+    carType: 4,
+    regNumber: 'KA-01-AA-1234',
+    lotName: 'Lot 2',
+    startTime: '2021-11-02T17:00:00.000Z',
+  },
+  {
+    id: '5',
+    carType: 3,
+    regNumber: 'KA-01-AA-1234',
+    lotName: 'Lot 2',
+    startTime: '2021-11-02T16:00:00.000Z',
+  },
+  {
+    id: '6',
+    carType: 2,
+    regNumber: 'KA-01-AA-1234',
+    lotName: 'Lot 2',
+    startTime: '2021-11-02T13:30:00.000Z',
+  },
+  {
+    id: '7',
+    carType: 1,
+    regNumber: 'KA-01-AA-1234',
+    lotName: 'Lot 1',
+    startTime: '2021-11-02T10:00:00.000Z',
+  },
+];

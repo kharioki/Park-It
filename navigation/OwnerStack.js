@@ -1,11 +1,10 @@
 import React from 'react'
 import { createStackNavigator } from '@react-navigation/stack';
 import { createDrawerNavigator } from '@react-navigation/drawer';
-import { Ionicons } from '@expo/vector-icons';
+import { Ionicons, MaterialIcons } from '@expo/vector-icons';
 
 import LotHomeScreen from '../screens/LotHomeScreen';
 import DrawerContent2 from '../screens/DrawerContent2';
-import DetailsScreen from '../screens/DetailsScreen';
 import CreateLotScreen from '../screens/CreateLotScreen';
 
 const LotHomeStack = createStackNavigator();
@@ -35,13 +34,35 @@ export const LotHomeStackScreen = ({ navigation }) => {
               onPress={() => navigation.openDrawer()}
             />
           ),
+          headerRight: () => (
+            <MaterialIcons.Button
+              name="add-road"
+              color="#0db665"
+              size={30}
+              backgroundColor="transparent"
+              style={{ marginRight: 10 }}
+              onPress={() => navigation.navigate('Create')}
+            />
+          ),
         }}
       />
       <LotHomeStack.Screen
-        name="CreateLot"
-        component={LotStackScreen}
+        name="Create"
+        component={CreateLotScreen}
         options={{
           title: 'Add a lot',
+          presentation: 'modal',
+          headerShown: false,
+          // headerLeft: () => (
+          //   <Ionicons.Button
+          //     name="ios-menu"
+          //     color="#222"
+          //     size={30}
+          //     backgroundColor="transparent"
+          //     style={{ marginLeft: 10 }}
+          //     onPress={() => navigation.openDrawer()}
+          //   />
+          // ),
         }}
       />
     </LotHomeStack.Navigator>

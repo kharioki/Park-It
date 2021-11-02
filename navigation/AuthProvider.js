@@ -7,6 +7,8 @@ const AuthProvider = ({ children }) => {
     phoneNumber: '',
     isAuthenticated: false,
   })
+  const [userType, setUserType] = useState('')
+
   const [session, setSession] = useState({
     sessionId: '',
     startTime: '',
@@ -37,12 +39,12 @@ const AuthProvider = ({ children }) => {
   }
 
   const signOut = () => {
-    setUser({ phoneNumber: '', isAuthenticated: false })
+    setUserType('')
   }
 
   return (
     <AuthContext.Provider
-      value={{ user, signUp, session, startSession, endSession, signOut }}>
+      value={{ user, signUp, session, startSession, endSession, signOut, userType, setUserType }}>
       {children}
     </AuthContext.Provider>
   )

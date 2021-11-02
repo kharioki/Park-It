@@ -39,8 +39,8 @@ const OnboardingScreen = ({ navigation }) => {
         NextButtonComponent={Next}
         DoneButtonComponent={Done}
         DotComponent={Dots}
-        onSkip={() => navigation.replace('SignIn')}
-        onDone={() => navigation.navigate('SignIn')}
+        onSkip={() => navigation.replace('Connect')}
+        onDone={() => navigation.navigate('Connect')}
         titleStyles={styles.title}
         subTitleStyles={styles.subTitle}
         pages={[

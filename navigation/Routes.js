@@ -3,15 +3,15 @@ import { NavigationContainer } from '@react-navigation/native'
 
 import AuthStack from './AuthStack'
 import AppStack from './AppStack'
+import OwnerStack from './OwnerStack'
 import { AuthContext } from './AuthProvider'
 
 const Routes = () => {
-  const { user } = useContext(AuthContext)
-  const { isAuthenticated } = user
+  const { userType } = useContext(AuthContext)
 
   return (
     <NavigationContainer>
-      {!isAuthenticated ? <AuthStack /> : <AppStack />}
+      {!userType ? <AuthStack /> : userType === 'owner' ? <OwnerStack /> : <AppStack />}
     </NavigationContainer>
   )
 }

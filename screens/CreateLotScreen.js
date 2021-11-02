@@ -125,17 +125,16 @@ const CreateLotScreen = () => {
           <Text style={styles.text}>Charging</Text>
         </View>
 
+        <View style={styles.buttonContainer}>
+          <Button
+            icon="check"
+            mode="contained"
+            style={[styles.button, { width: '80%' }]}
+            onPress={() => console.log('Pressed')}>
+            Create Lot
+          </Button>
+        </View>
       </ScrollView>
-
-      <View style={styles.buttonContainer}>
-        <Button
-          icon="check"
-          mode="contained"
-          style={[styles.button, { width: '80%' }]}
-          onPress={() => console.log('Pressed')}>
-          Create Lot
-        </Button>
-      </View>
 
       <MapModal
         visible={modalVisible}

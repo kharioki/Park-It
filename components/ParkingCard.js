@@ -1,12 +1,12 @@
 import React from 'react'
-import { View, Text, StyleSheet, Dimensions } from 'react-native'
+import { View, Text, StyleSheet, Dimensions, TouchableHighlight } from 'react-native'
 import Slider from '@react-native-community/slider';
 
 const { width } = Dimensions.get('window');
-const CARD_HEIGHT = 200;
+const CARD_HEIGHT = 220;
 const CARD_WIDTH = width * 0.8;
 
-const ParkingCard = ({ marker }) => {
+const ParkingCard = ({ marker, onPress }) => {
   return (
     <View style={styles.card}>
       <View style={styles.cardHeader}>
@@ -42,13 +42,17 @@ const ParkingCard = ({ marker }) => {
           ))}
         </View>
       </View>
+
+      <TouchableHighlight style={styles.cardButton} activeOpacity={0.6} underlayColor="#0db66530" onPress={onPress}>
+        <Text style={styles.cardButtonText}>SELECT</Text>
+      </TouchableHighlight>
     </View>
   )
 }
 
 const styles = StyleSheet.create({
   card: {
-    padding: 10,
+    paddingHorizontal: 10,
     elevation: 2,
     backgroundColor: '#FFF',
     borderRadius: 5,
@@ -68,10 +72,10 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
     paddingVertical: 10,
     borderBottomColor: '#ccc',
-    borderBottomWidth: 1,
+    borderBottomWidth: 0.5,
   },
   cardTitle: {
-    fontSize: 24,
+    fontSize: 20,
     fontWeight: 'bold',
     color: '#333',
   },
@@ -87,9 +91,9 @@ const styles = StyleSheet.create({
   },
   cardBody: {
     paddingHorizontal: 10,
-    paddingVertical: 10,
+    paddingVertical: 8,
     borderBottomColor: '#ccc',
-    borderBottomWidth: 1,
+    borderBottomWidth: 0.5,
   },
   cardDescription: {
     fontSize: 14,
@@ -114,7 +118,6 @@ const styles = StyleSheet.create({
   },
   cardFooter: {
     paddingTop: 10,
-    // paddingBottom: 10,
     paddingHorizontal: 10,
   },
   cardFooterText: {
@@ -131,6 +134,21 @@ const styles = StyleSheet.create({
     fontSize: 14,
     color: '#777',
   },
+  cardButton: {
+    backgroundColor: '#fff',
+    justifyContent: 'center',
+    alignItems: 'center',
+    padding: 10,
+    borderRadius: 5,
+    marginTop: 10,
+    height: 40,
+  },
+  cardButtonText: {
+    color: '#0db665',
+    fontSize: 16,
+    fontWeight: 'bold',
+    letterSpacing: 1,
+  }
 })
 
 export default ParkingCard

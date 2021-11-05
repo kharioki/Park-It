@@ -121,8 +121,6 @@ const HomeScreen = (props) => {
   const _map = useRef(null);
   const _scrollView = useRef(null);
 
-  // console.log(session)
-
   return (
     <View style={styles.container}>
       <MapView
@@ -220,11 +218,9 @@ const HomeScreen = (props) => {
                 { useNativeDriver: true }
               )}>
               {mapState.markers.map((marker, index) => (
-                <ParkingCard key={index} marker={marker} />
+                <ParkingCard key={index} marker={marker} onPress={() => setSelectedSession(markers)} />
               ))}
             </Animated.ScrollView>
-
-            <Button text="Go" onPress={() => setSelectedSession(markers[0])} />
           </View>
         }
         {selectedSession && !session.isActive &&

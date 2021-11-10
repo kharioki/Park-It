@@ -48,7 +48,7 @@ const OnboardingScreen = ({ navigation }) => {
             backgroundColor: '#fff',
             image: <Image source={require('../assets/images/city.png')} style={styles.image} />,
             title: 'Welcome to ParkIt',
-            subtitle: 'We are glad to see you here!',
+            subtitle: 'The first decentralized on-demand service app!',
           },
           {
             backgroundColor: '#fff',
@@ -56,12 +56,12 @@ const OnboardingScreen = ({ navigation }) => {
             title: 'Parking',
             subtitle: 'Find convenient and secure parking spaces in any city',
           },
-          {
-            backgroundColor: '#fff',
-            image: <Image source={require('../assets/images/map.png')} style={styles.image} />,
-            title: 'Navigation',
-            subtitle: 'Easy navigation, long and short-term parking too',
-          },
+          // {
+          //   backgroundColor: '#fff',
+          //   image: <Image source={require('../assets/images/map.png')} style={styles.image} />,
+          //   title: 'Navigation',
+          //   subtitle: 'Easy navigation, long and short-term parking too',
+          // },
           {
             backgroundColor: '#fff',
             image: <Image source={require('../assets/images/secure.png')} style={styles.image} />,

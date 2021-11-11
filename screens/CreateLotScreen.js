@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import { ScrollView, View, Text, StyleSheet } from 'react-native'
 import { TextInput, Button } from 'react-native-paper'
 import Checkbox from 'expo-checkbox'
+import { useForm, Controller } from 'react-hook-form';
 
 import MapModal from '../components/MapModal'
 
@@ -10,20 +11,61 @@ const CreateLotScreen = () => {
   const [modalVisible, setModalVisible] = useState(false);
   const [cordinate, setCordinate] = useState(null);
 
+  const { register, setValue, handleSubmit, control, reset, formState: { errors } } = useForm({
+    defaultValues: {
+      name: '',
+      location: '',
+      capacity: '',
+      pricePerHour: '',
+      pricePerDay: '',
+    }
+  });
+
+  const onSubmit = data => {
+    console.log(data)
+    reset()
+  };
+
+  const onChange = arg => {
+    return {
+      value: arg.nativeEvent.text,
+    }
+  };
+
+  console.log('errors', errors);
+
   const showModal = () => setModalVisible(true);
   const hideModal = () => setModalVisible(false);
 
   return (
     <View style={styles.container}>
       <ScrollView style={styles.formContainer}>
-        <TextInput
-          style={styles.input}
-          label='Lot Name'
+        <Controller
+          control={control}
+          render={({ field: { onChange, value } }) => (
+            <TextInput
+              style={styles.input}
+              label='Lot Name'
+              onChangeText={value => onChange(value)}
+              value={value}
+            />
+          )}
+          name="name"
+          rules={{ required: true }}
         />
-        <TextInput
-          style={styles.input}
-          label='Lot Location'
-          placeholder='e.g. Westlands, Nairobi'
+        <Controller
+          control={control}
+          render={({ field: { onChange, value } }) => (
+            <TextInput
+              style={styles.input}
+              label='Lot Location'
+              placeholder='e.g. Westlands, Nairobi'
+              onChangeText={value => onChange(value)}
+              value={value}
+            />
+          )}
+          name="location"
+          rules={{ required: true }}
         />
         {!cordinate && (
           <Button
@@ -34,23 +76,50 @@ const CreateLotScreen = () => {
             Drop Pin
           </Button>
         )}
-        <TextInput
-          style={styles.input}
-          label='Capacity (parking slots available)'
-          placeholder='e.g. 100'
-          keyboardType='numeric'
+        <Controller
+          control={control}
+          render={({ field: { onChange, value } }) => (
+            <TextInput
+              style={styles.input}
+              label='Capacity (parking slots available)'
+              placeholder='e.g. 100'
+              keyboardType='numeric'
+              onChangeText={value => onChange(value)}
+              value={value}
+            />
+          )}
+          name="capacity"
+          rules={{ required: true }}
         />
-        <TextInput
-          style={styles.input}
-          label='Price per day'
-          placeholder='e.g. 100'
-          keyboardType='numeric'
+        <Controller
+          control={control}
+          render={({ field: { onChange, value } }) => (
+            <TextInput
+              style={styles.input}
+              label='Price per day'
+              placeholder='e.g. 100'
+              keyboardType='numeric'
+              onChangeText={value => onChange(value)}
+              value={value}
+            />
+          )}
+          name="pricePerDay"
+          rules={{ required: true }}
         />
-        <TextInput
-          style={styles.input}
-          label='Price per hour'
-          placeholder='e.g. 100'
-          keyboardType='numeric'
+        <Controller
+          control={control}
+          render={({ field: { onChange, value } }) => (
+            <TextInput
+              style={styles.input}
+              label='Price per hour'
+              placeholder='e.g. 100'
+              keyboardType='numeric'
+              onChangeText={value => onChange(value)}
+              value={value}
+            />
+          )}
+          name="pricePerHour"
+          rules={{ required: true }}
         />
         <Text style={[styles.text, { color: '#0db665', marginVertical: 8 }]}>Parking available for the following:</Text>
         <View style={styles.checkboxContainer}>
@@ -130,7 +199,7 @@ const CreateLotScreen = () => {
             icon="check"
             mode="contained"
             style={[styles.button, { width: '80%' }]}
-            onPress={() => console.log('Pressed')}>
+            onPress={handleSubmit(onSubmit)}>
             Create Lot
           </Button>
         </View>

@@ -1,9 +1,12 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { View, Text, Image, StyleSheet } from 'react-native'
 import { Modal, Searchbar, Button } from 'react-native-paper'
 import MapView, { PROVIDER_GOOGLE } from 'react-native-maps';
+import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplete';
+import * as Location from 'expo-location'
 
 import { mapStandardStyle } from '../utils/mapData';
+import { GOOGLE_PLACES_API_KEY } from '../config';
 
 const initialMapState = {
   region: {
@@ -21,6 +24,8 @@ const MapModal = ({ visible, onHideMapModal, onSetCordinate }) => {
     latitude: 37.78825,
     longitude: -122.4324
   })
+  const [location, setLocation] = useState(null);
+  const [errorMsg, setErrorMsg] = useState(null);
 
   const onChangeSearch = query => setSearchQuery(query);
 
@@ -36,16 +41,70 @@ const MapModal = ({ visible, onHideMapModal, onSetCordinate }) => {
     onHideMapModal();
   }
 
+  useEffect(() => {
+    (async () => {
+      let { status } = await Location.requestForegroundPermissionsAsync();
+      if (status !== 'granted') {
+        setErrorMsg('Permission to access location was denied');
+        return;
+      }
+
+      let location = await Location.getCurrentPositionAsync({});
+      setLocation(location);
+      setCoordinates({
+        latitude: location.coords.latitude,
+        longitude: location.coords.longitude
+      })
+    })();
+  }, []);
+
+  console.log(location);
+
   return (
     <Modal visible={visible} onDismiss={onHideMapModal} contentContainerStyle={styles.modalContainer}>
       <View>
         <Text style={styles.text}>Search location and drop pin:</Text>
-        <Searchbar
+        <View style={styles.searchContainer}>
+          <GooglePlacesAutocomplete
+            placeholder='Enter Location'
+            minLength={2}
+            // autoFocus={true}
+            // returnKeyType={'default'}
+            fetchDetails={true}
+            query={{
+              key: GOOGLE_PLACES_API_KEY,
+              language: 'en', // language of the results
+            }}
+            onPress={(data, details = null) => console.log(data)}
+            onFail={(error) => console.error(error)}
+            // requestUrl={{
+            //   url:
+            //     'https://cors-anywhere.herokuapp.com/https://maps.googleapis.com/maps/api',
+            //   useOnPlatform: 'web',
+            // }} // this in only required for use on the web. See https://git.io/JflFv more for details.
+            styles={{
+              textInputContainer: {
+                backgroundColor: 'grey',
+              },
+              textInput: {
+                height: 38,
+                color: '#5d5d5d',
+                fontSize: 16,
+              },
+              predefinedPlacesDescription: {
+                color: '#1faadb',
+              },
+            }}
+            currentLocation={true} // Will add a 'Current location' button at the top of the predefined places list
+          />
+        </View>
+
+        {/* <Searchbar
           placeholder="Search location"
           onChangeText={onChangeSearch}
           value={searchQuery}
           style={styles.searchbar}
-        />
+        /> */}
         <View style={styles.mapContainer}>
           <MapView
             provider={PROVIDER_GOOGLE}
@@ -93,12 +152,16 @@ const styles = StyleSheet.create({
     marginHorizontal: 10,
     lineHeight: 20,
   },
+  searchContainer: {
+    marginBottom: 10,
+  },
   searchbar: {
     margin: 10,
   },
   mapContainer: {
+    marginTop: 30,
     width: '100%',
-    height: 400,
+    height: 300,
   },
   map: {
     width: '100%',

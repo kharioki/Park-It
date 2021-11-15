@@ -33,7 +33,7 @@ const ParkingCard = ({ marker, onPress }) => {
         </View>
       </View>
       <View style={styles.cardFooter}>
-        <Text style={styles.cardFooterText}>Services available:</Text>
+        <Text style={styles.cardFooterText}>Services:</Text>
         <View style={styles.cardFooterServices}>
           {marker.services.map((service, index) => (
             <Text key={index} style={styles.servicesText}>
@@ -44,7 +44,7 @@ const ParkingCard = ({ marker, onPress }) => {
       </View>
 
       <TouchableHighlight style={styles.cardButton} activeOpacity={0.6} underlayColor="#0db66530" onPress={onPress}>
-        <Text style={styles.cardButtonText}>SELECT</Text>
+        <Text style={styles.cardButtonText}>SELECT LOT</Text>
       </TouchableHighlight>
     </View>
   )

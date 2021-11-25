@@ -4,7 +4,7 @@ import Slider from '@react-native-community/slider';
 
 const { width } = Dimensions.get('window');
 const CARD_HEIGHT = 220;
-const CARD_WIDTH = width * 0.8;
+const CARD_WIDTH = width * 0.9;
 
 const ParkingCard = ({ marker, onPress }) => {
   return (
@@ -52,7 +52,8 @@ const ParkingCard = ({ marker, onPress }) => {
 
 const styles = StyleSheet.create({
   card: {
-    paddingHorizontal: 10,
+    // paddingHorizontal: 10,
+    marginBottom: 10,
     elevation: 2,
     backgroundColor: '#FFF',
     borderRadius: 5,

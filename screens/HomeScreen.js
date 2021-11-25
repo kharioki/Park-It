@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect, useContext } from 'react'
-import MapView, { PROVIDER_GOOGLE } from 'react-native-maps';
+// import MapView, { PROVIDER_GOOGLE } from 'react-native-maps';
 import {
   View, Animated, Platform, StyleSheet, Dimensions, ScrollView, Text, TouchableOpacity
 } from 'react-native'
@@ -14,6 +14,8 @@ import RegModal from '../components/RegModal';
 import ConfirmModal from '../components/ConfirmModal';
 
 import { AuthContext } from '../navigation/AuthProvider';
+import ListView from '../components/ListView';
+import Map from '../components/Map';
 
 const { width } = Dimensions.get('window');
 const CARD_WIDTH = width * 0.8;
@@ -32,6 +34,7 @@ const HomeScreen = (props) => {
     }
   }
 
+  const [showMap, setShowMap] = useState(false);
   const [mapState, setMapState] = useState(initialMapState);
   const [selectedSession, setSelectedSession] = useState(null);
   const [sessionEnded, setSessionEnded] = useState(false);
@@ -40,6 +43,10 @@ const HomeScreen = (props) => {
   const [confirmModalVisible, setConfirmModalVisible] = useState(false);
 
   const { session, startSession, endSession } = useContext(AuthContext);
+
+  const handleShowMap = () => {
+    setShowMap(!showMap);
+  }
 
   const showModal = () => setModalVisible(true);
   const hideModal = () => setModalVisible(false);
@@ -123,46 +130,26 @@ const HomeScreen = (props) => {
 
   return (
     <View style={styles.container}>
-      <MapView
-        ref={_map}
-        provider={PROVIDER_GOOGLE}
-        style={styles.container}
-        initialRegion={mapState.region}
-        customMapStyle={mapStandardStyle}>
-        {mapState.markers.map((marker, index) => {
-          const scaleStyle = {
-            transform: [
-              {
-                scale: interpolations[index].scale,
-              },
-            ],
-          };
-
-          return (
-            <MapView.Marker
-              key={index}
-              coordinate={marker.coordinate}
-              onPress={onMarkerPress}>
-              <Animated.View style={[styles.markerWrap]}>
-                <Animated.Image
-                  source={require('../assets/icons/parking-128.png')}
-                  style={[styles.marker, scaleStyle]}
-                  resizeMode="cover"
-                />
-              </Animated.View>
-            </MapView.Marker>
-          );
-        })}
-      </MapView>
+      {showMap ? (
+        <Map
+          mapState={mapState}
+          onMarkerPress={onMarkerPress}
+          interpolations={interpolations}
+        />
+      ) : (
+        <ListView mapState={mapState} setSelectedSession={setSelectedSession} />
+      )}
       <Header
         drawerOpen={() => navigation.openDrawer()}
         iconName="md-navigate-outline"
         hasActiveSession={session.isActive}
         selected={selectedSession}
         hasEnded={sessionEnded}
+        showMap={showMap}
+        handleShowMap={handleShowMap}
       />
       <View style={styles.bottomWrapper}>
-        {!session.isActive && selectedSession === null &&
+        {showMap && !session.isActive && selectedSession === null &&
           <View>
             <ScrollView
               horizontal
@@ -223,6 +210,7 @@ const HomeScreen = (props) => {
             </Animated.ScrollView>
           </View>
         }
+
         {selectedSession && !session.isActive &&
           <View style={styles.startSessionWrapper}>
             <TouchableOpacity style={styles.btn} onPress={() => setSelectedSession(null)}>
@@ -234,16 +222,18 @@ const HomeScreen = (props) => {
               <Text style={styles.infoBtnText}>Info</Text>
             </TouchableOpacity>
             <TouchableOpacity style={styles.startBtn} onPress={() => showModal()}>
-              <MaterialCommunityIcons name="car-convertible" size={30} color="white" />
+              <MaterialCommunityIcons name="car-convertible" size={30} color="#0db665" />
               <Text style={styles.startBtnText}>Start Session</Text>
             </TouchableOpacity>
           </View>
         }
+
         {session.isActive && selectedSession && !sessionEnded &&
           <View style={styles.endSessionWrapper}>
-            <Button text="End Session" onPress={() => showConfirmModal()} />
+            <Button text="End Session" onPress={() => showConfirmModal()} isClear />
           </View>
         }
+
         {sessionEnded &&
           <View style={styles.endSessionWrapper}>
             <View style={styles.summaryCard}>
@@ -260,7 +250,7 @@ const HomeScreen = (props) => {
                 <Text style={styles.summaryNumber}>300</Text>
               </View>
             </View>
-            <Button text="Pay Up" onPress={handleEndSession} />
+            <Button text="Pay Up" onPress={handleEndSession} isClear />
           </View>
         }
       </View>
@@ -293,7 +283,7 @@ const styles = StyleSheet.create({
   },
   bottomWrapper: {
     position: 'absolute',
-    bottom: 10,
+    bottom: 0,
     left: 0,
     right: 0,
   },
@@ -332,8 +322,11 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     alignItems: 'center',
     paddingHorizontal: 10,
-    paddingVertical: 10,
-    // marginBottom: 10,
+    paddingVertical: 20,
+    borderTopRightRadius: 20,
+    borderTopLeftRadius: 20,
+    backgroundColor: '#0db665',
+    bottom: 0,
   },
   btn: {
     paddingHorizontal: 10,
@@ -360,13 +353,13 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
     paddingVertical: 10,
     borderRadius: 10,
-    backgroundColor: '#0db665',
+    backgroundColor: '#fff',
     alignItems: 'center',
     justifyContent: 'center',
   },
   startBtnText: {
     fontSize: 14,
-    color: '#fff',
+    color: '#0db665',
     fontWeight: 'bold',
     letterSpacing: 1,
   },
@@ -375,8 +368,17 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     paddingHorizontal: 10,
-    paddingVertical: 10,
-    // marginBottom: 10,
+    paddingVertical: 20,
+    borderTopRightRadius: 20,
+    borderTopLeftRadius: 20,
+    backgroundColor: '#0db665',
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 6,
+    },
+    shadowOpacity: 0.37,
+    bottom: 0,
   },
   summaryCard: {
     backgroundColor: '#fff',

@@ -1,10 +1,11 @@
 import React from 'react'
 import { View, TextInput, StyleSheet, Dimensions, Platform, Text } from 'react-native'
 import { Ionicons } from '@expo/vector-icons'
+import { Button } from 'react-native-paper';
 
 const { width } = Dimensions.get('window');
 
-const Header = ({ drawerOpen, iconName, hasActiveSession, selected, hasEnded }) => {
+const Header = ({ drawerOpen, showMap, handleShowMap, hasActiveSession, selected, hasEnded }) => {
   return (
     <View style={styles.topWrapper}>
       <View style={styles.top}>
@@ -12,14 +13,16 @@ const Header = ({ drawerOpen, iconName, hasActiveSession, selected, hasEnded }) 
           name="ios-menu"
           size={30}
           color="#000"
-          backgroundColor="#ccc"
+          backgroundColor="transparent"
           onPress={drawerOpen} />
-        <Ionicons.Button
-          name={iconName}
-          size={30}
-          color="#000"
-          backgroundColor="#ccc"
-          onPress={() => { }} />
+        <Button
+          icon={showMap ? 'view-list' : 'map-marker-multiple'}
+          mode="contained"
+          color={"#0db665"}
+          onPress={() => handleShowMap()}
+        >
+          {showMap ? 'List View' : 'Map View'}
+        </Button>
       </View>
       <View style={styles.searchBox}>
         <TextInput
@@ -93,7 +96,6 @@ const styles = StyleSheet.create({
   sessionContainer: {
     width: '90%',
     alignSelf: 'center',
-    // marginTop: 10,
     padding: 10,
   },
   sessionInfo: {

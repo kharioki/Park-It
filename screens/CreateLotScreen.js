@@ -1,12 +1,13 @@
 import React, { useState } from 'react'
 import { ScrollView, View, Text, StyleSheet } from 'react-native'
 import { TextInput, Button } from 'react-native-paper'
+import { Ionicons } from '@expo/vector-icons'
 import Checkbox from 'expo-checkbox'
 import { useForm, Controller } from 'react-hook-form';
 
 import MapModal from '../components/MapModal'
 
-const CreateLotScreen = () => {
+const CreateLotScreen = ({ navigation }) => {
   const [isSelected, setSelection] = useState(false);
   const [modalVisible, setModalVisible] = useState(false);
   const [cordinate, setCordinate] = useState(null);
@@ -39,6 +40,15 @@ const CreateLotScreen = () => {
 
   return (
     <View style={styles.container}>
+      <View style={styles.header}>
+        <Text style={styles.headerText}>Add Parking Lot</Text>
+        <Ionicons.Button
+          name="ios-close"
+          size={30}
+          color="#888"
+          backgroundColor="transparent"
+          onPress={() => navigation.goBack()} />
+      </View>
       <ScrollView style={styles.formContainer}>
         <Controller
           control={control}
@@ -218,6 +228,17 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#fff',
+  },
+  header: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    // marginBottom: 10,
+  },
+  headerText: {
+    fontSize: 16,
+    color: '#0db665',
+    marginLeft: 20,
   },
   formContainer: {
     flex: 1,

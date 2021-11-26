@@ -1,20 +1,19 @@
 import React, { useState, useRef, useEffect, useContext } from 'react'
-import {
-  View, Animated, Platform, StyleSheet, Dimensions, ScrollView, Text, TouchableOpacity
-} from 'react-native'
-import { MaterialCommunityIcons, Entypo } from '@expo/vector-icons';
+import { View, Animated, Platform, StyleSheet, Dimensions, ScrollView } from 'react-native'
 
+import { AuthContext } from '../navigation/AuthProvider';
 import { markers, categories } from '../utils/mapData';
+
 import Header from '../components/Header';
 import Chip from '../components/Chip';
 import ParkingCard from '../components/ParkingCard';
-import Button from '../components/Button';
 import RegModal from '../components/RegModal';
 import ConfirmModal from '../components/ConfirmModal';
-
-import { AuthContext } from '../navigation/AuthProvider';
 import ListView from '../components/ListView';
 import Map from '../components/Map';
+import PaySession from '../components/wrappers/PaySession';
+import EndSession from '../components/wrappers/EndSession';
+import StartSession from '../components/wrappers/StartSession';
 
 const { width } = Dimensions.get('window');
 const CARD_WIDTH = width * 0.8;
@@ -84,6 +83,7 @@ const HomeScreen = (props) => {
   const hideConfirmModal = () => setConfirmModalVisible(false);
 
   const handleEndSession = () => {
+    onClear();
     setSessionEnded(false);
     setSelectedSession(null);
     setRegNumber('');
@@ -249,48 +249,21 @@ const HomeScreen = (props) => {
         }
 
         {selectedSession && !session.isActive &&
-          <View style={styles.startSessionWrapper}>
-            <TouchableOpacity style={styles.btn} onPress={() => clearSelection()}>
-              <Entypo name="cross" size={30} color="red" />
-              <Text style={styles.cancelBtnText}>Cancel</Text>
-            </TouchableOpacity>
-            <TouchableOpacity style={styles.btn} onPress={() => navigation.navigate('Details')}>
-              <Entypo name="info" size={30} color="#0db665" />
-              <Text style={styles.infoBtnText}>Info</Text>
-            </TouchableOpacity>
-            <TouchableOpacity style={styles.startBtn} onPress={() => showModal()}>
-              <MaterialCommunityIcons name="car-convertible" size={30} color="#0db665" />
-              <Text style={styles.startBtnText}>Start Session</Text>
-            </TouchableOpacity>
-          </View>
+          <StartSession
+            clear={clearSelection}
+            showDetails={() => navigation.navigate('Details')}
+            showModal={showModal}
+          />
         }
 
         {session.isActive && selectedSession && !sessionEnded &&
-          <View style={styles.endSessionWrapper}>
-            <Button text="End Session" onPress={() => showConfirmModal()} isClear />
-          </View>
+          <EndSession showConfirmModal={showConfirmModal} />
         }
 
-        {sessionEnded &&
-          <View style={styles.endSessionWrapper}>
-            <View style={styles.summaryCard}>
-              <View style={styles.summaryCardHeader}>
-                <Text style={styles.totalText}>Total</Text>
-                <Text style={styles.totalNumber}>700</Text>
-              </View>
-              <View style={styles.summaryCardBody}>
-                <Text style={styles.summaryText}>Parking</Text>
-                <Text style={styles.summaryNumber}>400</Text>
-              </View>
-              <View style={styles.summaryCardBody}>
-                <Text style={styles.summaryText}>Car wash</Text>
-                <Text style={styles.summaryNumber}>300</Text>
-              </View>
-            </View>
-            <Button text="Pay Up" onPress={handleEndSession} isClear />
-          </View>
-        }
+        {sessionEnded && <PaySession handleEndSession={handleEndSession} />}
+
       </View>
+
       <RegModal
         visible={modalVisible}
         onHideModal={hideModal}
@@ -353,113 +326,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     fontWeight: 'bold',
     letterSpacing: 1,
-  },
-  startSessionWrapper: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    paddingHorizontal: 10,
-    paddingVertical: 20,
-    borderTopRightRadius: 20,
-    borderTopLeftRadius: 20,
-    backgroundColor: '#0db665',
-    bottom: 0,
-  },
-  btn: {
-    paddingHorizontal: 10,
-    paddingVertical: 10,
-    borderRadius: 10,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-    width: 100,
-  },
-  cancelBtnText: {
-    fontSize: 14,
-    color: 'red',
-    fontWeight: 'bold',
-    letterSpacing: 1,
-  },
-  infoBtnText: {
-    fontSize: 14,
-    color: '#0db665',
-    fontWeight: 'bold',
-    letterSpacing: 1,
-  },
-  startBtn: {
-    paddingHorizontal: 10,
-    paddingVertical: 10,
-    borderRadius: 10,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  startBtnText: {
-    fontSize: 14,
-    color: '#0db665',
-    fontWeight: 'bold',
-    letterSpacing: 1,
-  },
-  endSessionWrapper: {
-    flexDirection: 'column',
-    justifyContent: 'center',
-    alignItems: 'center',
-    paddingHorizontal: 10,
-    paddingVertical: 20,
-    borderTopRightRadius: 20,
-    borderTopLeftRadius: 20,
-    backgroundColor: '#0db665',
-    shadowColor: '#000',
-    shadowOffset: {
-      width: 0,
-      height: 6,
-    },
-    shadowOpacity: 0.37,
-    bottom: 0,
-  },
-  summaryCard: {
-    backgroundColor: '#fff',
-    borderRadius: 5,
-    paddingVertical: 10,
-    paddingHorizontal: 20,
-    marginBottom: 10,
-    width: width * 0.9,
-  },
-  summaryCardHeader: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    marginBottom: 10,
-    borderBottomWidth: 1,
-    borderBottomColor: '#ccc',
-    paddingVertical: 10,
-  },
-  totalText: {
-    fontSize: 18,
-    fontWeight: 'bold',
-    letterSpacing: 1,
-  },
-  totalNumber: {
-    fontSize: 18,
-    fontWeight: 'bold',
-    letterSpacing: 1,
-    color: '#0db665',
-  },
-  summaryCardBody: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    marginBottom: 10,
-  },
-  summaryText: {
-    fontSize: 14,
-    letterSpacing: 1,
-  },
-  summaryNumber: {
-    fontSize: 14,
-    fontWeight: 'bold',
-    letterSpacing: 1,
-    color: '#333',
   },
 })
 

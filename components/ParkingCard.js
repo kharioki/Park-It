@@ -52,23 +52,22 @@ const ParkingCard = ({ marker, onPress, selected }) => {
       >
         <Text style={styles.cardButtonText}>SELECT LOT</Text>
       </TouchableHighlight>
-
     </View>
   )
 }
 
 const styles = StyleSheet.create({
   card: {
-    // paddingHorizontal: 10,
+    paddingHorizontal: 10,
     marginBottom: 10,
-    elevation: 2,
-    backgroundColor: '#FFF',
+    backgroundColor: '#fff',
     borderRadius: 5,
-    marginRight: 10,
+    marginHorizontal: 5,
     shadowColor: '#000',
-    shadowRadius: 5,
-    shadowOpacity: 0.3,
-    shadowOffset: { x: 2, y: -2 },
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.5,
+    shadowRadius: 1,
+    elevation: 10,
     height: CARD_HEIGHT,
     width: CARD_WIDTH,
     overflow: 'hidden',

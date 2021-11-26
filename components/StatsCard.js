@@ -16,7 +16,7 @@ const styles = StyleSheet.create({
   card: {
     backgroundColor: '#0db66510',
     width: width / 2 - 30,
-    height: 120,
+    height: 80,
     padding: 10,
     marginBottom: 10,
     borderRadius: 10,
@@ -24,14 +24,14 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   cardNumber: {
-    fontSize: 30,
-    fontWeight: '200',
+    fontSize: 20,
+    fontWeight: '500',
     color: '#0db665',
   },
   cardText: {
     fontSize: 14,
     color: '#777',
-    fontWeight: 'bold',
+    fontWeight: '200',
     textAlign: 'center',
     letterSpacing: 1,
   },

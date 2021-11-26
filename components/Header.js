@@ -1,5 +1,5 @@
 import React from 'react'
-import { View, TextInput, StyleSheet, Dimensions, Platform, Text } from 'react-native'
+import { View, TextInput, StyleSheet, Dimensions, Platform } from 'react-native'
 import { Ionicons } from '@expo/vector-icons'
 import { Button } from 'react-native-paper';
 
@@ -38,23 +38,6 @@ const Header = ({ drawerOpen, showMap, handleShowMap, hasActiveSession, selected
           <Ionicons name="ios-search" size={20} color="#999" />
         )}
       </View>
-
-      {hasActiveSession && selected && !hasEnded && (
-        <View style={styles.sessionContainer}>
-          <View style={styles.sessionInfo}>
-            <Text style={styles.activeSessionText}>You have an active parking session: </Text>
-            <Text style={styles.activeSessionTime}>4hr 25mins</Text>
-          </View>
-        </View>
-      )}
-      {hasEnded && (
-        <View style={styles.sessionContainer}>
-          <View style={styles.sessionInfo}>
-            <Text style={styles.activeSessionText}>Session ended: Total time</Text>
-            <Text style={styles.activeSessionTime}>8hrs 13mins</Text>
-          </View>
-        </View>
-      )}
     </View>
   )
 }
@@ -82,43 +65,16 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
     borderRadius: 5,
     padding: 10,
-    shadowColor: '#ccc',
-    shadowOffset: { width: 0, height: 3 },
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.5,
-    shadowRadius: 5,
+    shadowRadius: 1,
     elevation: 10,
   },
   searchInput: {
     flex: 1,
     fontSize: 16,
     color: '#333',
-  },
-  sessionContainer: {
-    width: '90%',
-    alignSelf: 'center',
-    padding: 10,
-  },
-  sessionInfo: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-  },
-  activeSessionText: {
-    fontSize: 14,
-    color: '#fff',
-    backgroundColor: '#0db665',
-    padding: 5,
-    paddingHorizontal: 10,
-    borderRadius: 5,
-  },
-  activeSessionTime: {
-    fontSize: 14,
-    fontWeight: 'bold',
-    color: '#0db665',
-    backgroundColor: '#fff',
-    padding: 5,
-    paddingHorizontal: 10,
-    borderRadius: 5,
   },
 })
 

@@ -2,6 +2,7 @@ import React from 'react'
 import {
   View, Text, StyleSheet, Dimensions, TouchableOpacity, ScrollView
 } from 'react-native'
+import { Button } from 'react-native-paper';
 
 import { activeSessions } from '../utils/sampleData'
 import RowCard from '../components/RowCard'
@@ -13,9 +14,14 @@ const LotHomeScreen = ({ navigation }) => {
   return (
     <View style={styles.container}>
       <View style={styles.header}>
-        <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('Create')}>
-          <Text style={styles.buttonText}>Add a Parking Lot</Text>
-        </TouchableOpacity>
+        <Button
+          icon='parking'
+          mode="contained"
+          color={"#0db665"}
+          style={styles.button}
+          onPress={() => navigation.navigate('Create')}>
+          Add a Parking Lot
+        </Button>
       </View>
       <View style={styles.subHeader}>
         <Text style={styles.subHeaderText}>Summary</Text>
@@ -59,17 +65,8 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
   button: {
-    width: width * 0.4,
-    height: 50,
-    backgroundColor: '#0db665',
+    width: width * 0.6,
     borderRadius: 25,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  buttonText: {
-    fontSize: 16,
-    fontWeight: '400',
-    color: '#fff',
   },
   subHeader: {
     paddingHorizontal: 20,

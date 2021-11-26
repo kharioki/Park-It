@@ -1,11 +1,10 @@
 import React, { useState, useRef, useEffect, useContext } from 'react'
-// import MapView, { PROVIDER_GOOGLE } from 'react-native-maps';
 import {
   View, Animated, Platform, StyleSheet, Dimensions, ScrollView, Text, TouchableOpacity
 } from 'react-native'
 import { MaterialCommunityIcons, Entypo } from '@expo/vector-icons';
 
-import { markers, mapStandardStyle, categories } from '../utils/mapData';
+import { markers, categories } from '../utils/mapData';
 import Header from '../components/Header';
 import Chip from '../components/Chip';
 import ParkingCard from '../components/ParkingCard';
@@ -46,6 +45,36 @@ const HomeScreen = (props) => {
 
   const handleShowMap = () => {
     setShowMap(!showMap);
+  }
+
+  const onSelectLot = (lot) => {
+    const selectedMarkers = markers.filter(marker => marker.id === lot.id);
+    const selectedRegion = {
+      latitude: lot.coordinate.latitude,
+      longitude: lot.coordinate.longitude,
+      latitudeDelta: 0.04864195044303443,
+      longitudeDelta: 0.040142817690068,
+    }
+    let _state = {
+      markers: selectedMarkers,
+      region: selectedRegion
+    }
+    setMapState(_state);
+  }
+
+  const onClear = () => {
+    setMapState(initialMapState);
+  }
+
+
+  const handleSelect = (lot) => {
+    onSelectLot(lot);
+    setSelectedSession(lot);
+  }
+
+  const clearSelection = () => {
+    onClear();
+    setSelectedSession(null);
   }
 
   const showModal = () => setModalVisible(true);
@@ -137,7 +166,11 @@ const HomeScreen = (props) => {
           interpolations={interpolations}
         />
       ) : (
-        <ListView mapState={mapState} setSelectedSession={setSelectedSession} />
+        <ListView
+          mapState={mapState}
+          handleSelect={handleSelect}
+          selected={selectedSession}
+        />
       )}
       <Header
         drawerOpen={() => navigation.openDrawer()}
@@ -205,7 +238,11 @@ const HomeScreen = (props) => {
                 { useNativeDriver: true }
               )}>
               {mapState.markers.map((marker, index) => (
-                <ParkingCard key={index} marker={marker} onPress={() => setSelectedSession(markers)} />
+                <ParkingCard
+                  key={index}
+                  marker={marker}
+                  selected={selectedSession}
+                  onPress={() => handleSelect(marker)} />
               ))}
             </Animated.ScrollView>
           </View>
@@ -213,7 +250,7 @@ const HomeScreen = (props) => {
 
         {selectedSession && !session.isActive &&
           <View style={styles.startSessionWrapper}>
-            <TouchableOpacity style={styles.btn} onPress={() => setSelectedSession(null)}>
+            <TouchableOpacity style={styles.btn} onPress={() => clearSelection()}>
               <Entypo name="cross" size={30} color="red" />
               <Text style={styles.cancelBtnText}>Cancel</Text>
             </TouchableOpacity>

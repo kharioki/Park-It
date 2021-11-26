@@ -3,7 +3,7 @@ import { View, StyleSheet, ScrollView } from 'react-native'
 
 import ParkingCard from './ParkingCard'
 
-const ListView = ({ mapState, setSelectedSession }) => {
+const ListView = ({ mapState, handleSelect, selected }) => {
   const _scrollView = useRef(null);
 
   return (
@@ -18,7 +18,8 @@ const ListView = ({ mapState, setSelectedSession }) => {
           <ParkingCard
             key={index}
             marker={marker}
-            onPress={() => setSelectedSession(marker)}
+            onPress={() => handleSelect(marker)}
+            selected={selected}
           />
         ))}
       </ScrollView>

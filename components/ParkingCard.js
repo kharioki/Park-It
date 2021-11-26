@@ -6,7 +6,7 @@ const { width } = Dimensions.get('window');
 const CARD_HEIGHT = 220;
 const CARD_WIDTH = width * 0.9;
 
-const ParkingCard = ({ marker, onPress }) => {
+const ParkingCard = ({ marker, onPress, selected }) => {
   return (
     <View style={styles.card}>
       <View style={styles.cardHeader}>
@@ -43,9 +43,16 @@ const ParkingCard = ({ marker, onPress }) => {
         </View>
       </View>
 
-      <TouchableHighlight style={styles.cardButton} activeOpacity={0.6} underlayColor="#0db66530" onPress={onPress}>
+      <TouchableHighlight
+        style={styles.cardButton}
+        activeOpacity={0.6}
+        underlayColor="#0db66530"
+        onPress={onPress}
+        disabled={selected?.id === marker.id}
+      >
         <Text style={styles.cardButtonText}>SELECT LOT</Text>
       </TouchableHighlight>
+
     </View>
   )
 }

@@ -1,5 +1,6 @@
 export const markers = [
   {
+    id: 1,
     coordinate: {
       latitude: 22.6293867,
       longitude: 88.4354486,
@@ -12,6 +13,7 @@ export const markers = [
     services: ['Parking', 'Wifi', 'Charging', 'Car Wash'],
   },
   {
+    id: 2,
     coordinate: {
       latitude: 22.6345648,
       longitude: 88.4377279,
@@ -24,6 +26,7 @@ export const markers = [
     services: ['Parking', 'Wifi', 'Charging', 'Car Wash'],
   },
   {
+    id: 3,
     coordinate: {
       latitude: 22.6281662,
       longitude: 88.4410113,
@@ -36,6 +39,7 @@ export const markers = [
     services: ['Parking', 'Wifi', 'Charging', 'Car Wash'],
   },
   {
+    id: 4,
     coordinate: {
       latitude: 22.6341137,
       longitude: 88.4497463,
@@ -48,6 +52,7 @@ export const markers = [
     services: ['Parking', 'Wifi', 'Charging', 'Car Wash'],
   },
   {
+    id: 5,
     coordinate: {
       latitude: 22.6292757,
       longitude: 88.444781,

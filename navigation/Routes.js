@@ -5,12 +5,13 @@ import AuthStack from './AuthStack'
 import AppStack from './AppStack'
 import OwnerStack from './OwnerStack'
 import { AuthContext } from './AuthProvider'
+import LinkingConfiguration from './LinkingConfiguration'
 
 const Routes = () => {
   const { userType } = useContext(AuthContext)
 
   return (
-    <NavigationContainer>
+    <NavigationContainer linking={LinkingConfiguration}>
       {!userType ? <AuthStack /> : userType === 'owner' ? <OwnerStack /> : <AppStack />}
     </NavigationContainer>
   )

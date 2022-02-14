@@ -4,10 +4,12 @@ export const AuthContext = createContext()
 
 const AuthProvider = ({ children }) => {
   const [user, setUser] = useState({
-    phoneNumber: '',
     isAuthenticated: false,
   })
+  const [address, setAddress] = useState('')
+  const [phoneNumber, setPhoneNumber] = useState('')
   const [userType, setUserType] = useState('')
+  const [balance, setBalance] = useState(0)
 
   const [session, setSession] = useState({
     sessionId: '',
@@ -34,17 +36,13 @@ const AuthProvider = ({ children }) => {
     })
   }
 
-  const signUp = (phoneNumber) => {
-    setUser({ phoneNumber, isAuthenticated: true })
-  }
-
   const signOut = () => {
     setUserType('')
   }
 
   return (
     <AuthContext.Provider
-      value={{ user, signUp, session, startSession, endSession, signOut, userType, setUserType }}>
+      value={{ user, session, startSession, endSession, signOut, userType, setUserType, address, setAddress, phoneNumber, setPhoneNumber, balance, setBalance }}>
       {children}
     </AuthContext.Provider>
   )

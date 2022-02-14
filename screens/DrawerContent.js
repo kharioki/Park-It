@@ -6,7 +6,7 @@ import { Ionicons, MaterialCommunityIcons } from '@expo/vector-icons';
 import { AuthContext } from '../navigation/AuthProvider'
 
 const DrawerContent = (props) => {
-  const { user, signOut } = useContext(AuthContext)
+  const { address, phoneNumber, signOut } = useContext(AuthContext)
   const [visible, setVisible] = useState(false);
 
   const onToggleSnackBar = () => setVisible(!visible);
@@ -23,7 +23,7 @@ const DrawerContent = (props) => {
                 size={60}
               />
               <View style={{ marginLeft: 15, flexDirection: 'column' }}>
-                <Title style={styles.title}>{user ? user.phoneNumber : '+254720000000'}</Title>
+                <Title style={styles.title}>{phoneNumber ? phoneNumber : '+254720000000'}</Title>
                 <Caption style={styles.caption}>Versão 1.0</Caption>
               </View>
             </View>
@@ -67,7 +67,7 @@ const DrawerContent = (props) => {
           <Drawer.Section title="Wallet">
             <View onPress={() => { }}>
               <View style={styles.preference}>
-                <Text>Wallet</Text>
+                <Text>{address}</Text>
                 <TouchableRipple onPress={onToggleSnackBar}>
                   <View style={styles.btn}>
                     <Image source={require('../assets/icons/Celo-Glyph-Color.png')} style={styles.icon} />

@@ -1,7 +1,5 @@
 import React from 'react'
-import {
-  View, Text, StyleSheet, Dimensions, TouchableOpacity, ScrollView
-} from 'react-native'
+import { View, Text, StyleSheet, Dimensions, ScrollView } from 'react-native'
 import { Button } from 'react-native-paper';
 
 import { activeSessions } from '../utils/sampleData'
